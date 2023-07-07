@@ -41,13 +41,13 @@
                                 <h4 class="text-right">Thêm sản phẩm mới sản phẩm</h4>
                             </div>         
                             <div class="row mt-3">
-                                <div class="col-md-12"><label class="labels">Tên sản phẩm</label><input type="text" class="form-control"  placeholder="Tên sản phẩm" name="fullname" required></div>
-                                <div class="col-md-12"><label class="labels">Giá bán</label><input type="number" class="form-control"  placeholder="Giá bán"  name="email" required></div>
-                                <div class="col-md-12"><label class="labels">Giá gốc</label><input type="number" class="form-control"  placeholder="Giá gốc"  name="phone" required></div>
-                                <div class="col-md-12"><label class="labels">Link ảnh</label><input type="text" class="form-control" placeholder="Link ảnh"  name="address" required></div>
-                                <div class="col-md-12"><label class="labels">Mô tả</label><input type="text" class="form-control" placeholder="Mô tả"  name="dob" required></div>
-                                <div class="col-md-12"><label class="labels">Ngày tạo</label><input type="date" class="form-control" placeholder="Ngày tạo"  name="fullname" required></div>
-                                <div class="col-md-12"><label class="labels">Ngày sửa</label><input type="date" class="form-control" placeholder="Ngày sửa"  name="email" required></div>
+                                <div class="col-md-12"><label class="labels">Tên sản phẩm</label><input type="text" class="form-control"  placeholder="Tên sản phẩm" name="name" required></div>
+                                <div class="col-md-12"><label class="labels">Giá bán</label><input type="number" class="form-control"  placeholder="Giá bán"  name="price" required></div>
+                                <div class="col-md-12"><label class="labels">Giá gốc</label><input type="number" class="form-control"  placeholder="Giá gốc"  name="priceOriginal" required></div>
+                                <div class="col-md-12"><label class="labels">Link ảnh</label><input type="text" class="form-control" placeholder="Link ảnh"  name="image" required></div>
+                                <div class="col-md-12"><label class="labels">Mô tả</label><input type="text" class="form-control" placeholder="Mô tả"  name="description" required></div>
+                                <div class="col-md-12"><label class="labels">Ngày tạo</label><input type="date" class="form-control" placeholder="Ngày tạo"  name="createDate" required></div>
+                                <div class="col-md-12"><label class="labels">Ngày sửa</label><input type="date" class="form-control" placeholder="Ngày sửa"  name="updateDate" required></div>
                                 <div class="col-md-12"><label class="labels">Danh mục</label>
                                     <select name="cid">
                                         <option value="13">Váy</option>
@@ -57,10 +57,10 @@
                                     </select>
 
                                 </div>
-                                <div class="col-md-12"><label class="labels">Số lượng</label><input type="number" class="form-control" placeholder="Số lượng"  name="address" required></div>
-                                <div class="col-md-12"><label class="labels">Màu sắc</label><input type="text" class="form-control" placeholder="Màu sắc"  name="dob" required></div>
-                                <div class="col-md-12"><label class="labels">Chất liệu</label><input type="text" class="form-control" placeholder="chất liệu"  name="fullname" required></div>
-                                <div class="col-md-12"><label class="labels"></label><input type="number" hidden class="form-control"  value="0" name="email" required></div>
+                                <div class="col-md-12"><label class="labels">Số lượng</label><input type="number" class="form-control" placeholder="Số lượng"  name="quantity" required></div>
+                                <div class="col-md-12"><label class="labels">Màu sắc</label><input type="text" class="form-control" placeholder="Màu sắc"  name="color" required></div>
+                                <div class="col-md-12"><label class="labels">Chất liệu</label><input type="text" class="form-control" placeholder="chất liệu"  name="material" required></div>
+                                <div class="col-md-12"><label class="labels"></label><input type="number" hidden class="form-control"  value="0" name="quantitySold" required></div>
 
                             </div>
                             <div class="mt-5 text-center"><input class="btn btn-primary profile-button" type="submit" value="Save"></div>                            
