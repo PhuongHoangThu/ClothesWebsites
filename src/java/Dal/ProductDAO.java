@@ -39,6 +39,7 @@ public class ProductDAO extends DBContext {
                 e.setColor(rs.getString("Color"));
                 e.setMaterial(rs.getString("Material"));
                 e.setPriceOriginal(rs.getInt("OriginalPrice"));
+                e.setQuantitySold(rs.getInt("QuantitySold"));
                 list.add(e);
             }
         } catch (Exception e) {
@@ -46,6 +47,7 @@ public class ProductDAO extends DBContext {
         }
         return list;
     }
+    
 
     public List<Product> getAllProductsByCategoryID(int cid) {
         String sql = "select * from Product";
@@ -70,6 +72,7 @@ public class ProductDAO extends DBContext {
                 e.setColor(rs.getString("Color"));
                 e.setMaterial(rs.getString("Material"));
                 e.setPriceOriginal(rs.getInt("OriginalPrice"));
+                e.setQuantitySold(rs.getInt("QuantitySold"));
                 list.add(e);
             }
         } catch (Exception e) {
@@ -77,7 +80,25 @@ public class ProductDAO extends DBContext {
         }
         return list;
     }
-
+    public List<Size> getSizeByPid(int pid){
+        String sql = "select * from Size where pid = ?";
+        List<Size> list = new ArrayList<>();
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setInt(1, pid);
+            ResultSet rs = st.executeQuery();
+            while(rs.next()){
+                Size s = new Size();
+                s.setId(rs.getInt("id"));
+                s.setName(rs.getString("name"));
+                s.setProduct(getProductByid(pid));
+                s.setQuantity(rs.getInt("quantity"));
+                list.add(s);
+            }
+        } catch (Exception e) {
+        }
+        return list;
+    }
     public List<Product> getNewestProduct() {
         String sql = "select top 10 percent * from Product order by createdate desc";
         List<Product> list = new ArrayList<>();
@@ -98,6 +119,7 @@ public class ProductDAO extends DBContext {
                 e.setColor(rs.getString("Color"));
                 e.setMaterial(rs.getString("Material"));
                 e.setPriceOriginal(rs.getInt("OriginalPrice"));
+                e.setQuantitySold(rs.getInt("QuantitySold"));
                 list.add(e);
             }
         } catch (Exception e) {
@@ -128,6 +150,7 @@ public class ProductDAO extends DBContext {
                 e.setColor(rs.getString("Color"));
                 e.setMaterial(rs.getString("Material"));
                 e.setPriceOriginal(rs.getInt("OriginalPrice"));
+                e.setQuantitySold(rs.getInt("QuantitySold"));
                 list.add(e);
             }
         } catch (Exception e) {
@@ -157,6 +180,7 @@ public class ProductDAO extends DBContext {
                 e.setColor(rs.getString("Color"));
                 e.setMaterial(rs.getString("Material"));
                 e.setPriceOriginal(rs.getInt("OriginalPrice"));
+                e.setQuantitySold(rs.getInt("QuantitySold"));
                 return e;
             }
         } catch (Exception e) {
@@ -253,6 +277,7 @@ public class ProductDAO extends DBContext {
                 e.setColor(rs.getString("Color"));
                 e.setMaterial(rs.getString("Material"));
                 e.setPriceOriginal(rs.getInt("OriginalPrice"));
+                e.setQuantitySold(rs.getInt("QuantitySold"));
                 list.add(e);
             }
         } catch (Exception e) {
@@ -262,7 +287,7 @@ public class ProductDAO extends DBContext {
     }
 
     public List<Sale> getSaleProduct() {
-        String sql = "select s.[id]as sid,p.id as pid,discount,startdate,finishdate,ProductName,Price,image,[Description],[CreateDate],[UpdateDate],[cid],[quantity],[Color],[Material]\n"
+        String sql = "select s.[id]as sid,p.id as pid,discount,startdate,finishdate,ProductName,Price,image,[Description],[CreateDate],[UpdateDate],[cid],[quantity],[Color],[Material],OriginalPrice,QuantitySold\n"
                 + "from Sale s inner join Product p on p.id = s.pid \n"
                 + "where getdate() between s.startdate and s.finishdate";
         List<Sale> list = new ArrayList<>();
@@ -284,6 +309,7 @@ public class ProductDAO extends DBContext {
                 e.setColor(rs.getString("Color"));
                 e.setMaterial(rs.getString("Material"));
                 e.setPriceOriginal(rs.getInt("OriginalPrice"));
+                e.setQuantitySold(rs.getInt("QuantitySold"));
                 s.setId(rs.getInt("sid"));
                 s.setProduct(e);
                 s.setDiscount(rs.getFloat("discount"));
@@ -371,7 +397,7 @@ public class ProductDAO extends DBContext {
     public static void main(String[] args) {
         ProductDAO dao = new ProductDAO();
         //dao.getAllProductsByCategoryID(13);
-        System.out.println(dao.getNewestProduct().size());
+        System.out.println(dao.getSizeByPid(6).size());
     }
 
 }

@@ -6,6 +6,7 @@ package Controller;
 
 import Dal.ProductDAO;
 import Model.Product;
+import Model.Size;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -14,14 +15,15 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
  *
  * @author HP
  */
-@WebServlet(name = "CrudProductServlet", urlPatterns = {"/crudproduct"})
-public class CrudProductServlet extends HttpServlet {
+@WebServlet(name = "CrudProductDetailServlet", urlPatterns = {"/detailProductAd"})
+public class CrudProductDetailServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -63,25 +65,19 @@ public class CrudProductServlet extends HttpServlet {
             throws ServletException, IOException {
         //processRequest(request, response);
         HttpSession session = request.getSession();
-        ProductDAO p = new ProductDAO();
-        List<Product> listAd = p.getAllProducts();
-        int pageAd, numperpage = 12;
-        int sizeAd = listAd.size();
-        int numAd = (sizeAd % numperpage == 0 ? (sizeAd / numperpage) : (sizeAd / numperpage + 1));
-        String xpageAd = request.getParameter("pageAd");
-        if (xpageAd == null) {
-            pageAd = 1;
-        } else {
-            pageAd = Integer.parseInt(xpageAd);
+        String id_r = request.getParameter("pid");
+        ProductDAO dao = new ProductDAO();
+        List<Size> list = new ArrayList<>();
+        int id;
+        try {
+            id = Integer.parseInt(id_r);
+            Product p = dao.getProductByid(id);
+            list = dao.getSizeByPid(id);
+            session.setAttribute("product", p);
+            session.setAttribute("productDetail", list);
+        } catch (Exception e) {
         }
-        int start, end;
-        start = (pageAd - 1) * numperpage;
-        end = Math.min(pageAd * numperpage, sizeAd);
-        List<Product> listSubAd = p.getListByPage(listAd, start, end);
-        session.setAttribute("listAd", listSubAd);
-        request.setAttribute("pageAd", pageAd);
-        request.setAttribute("numAd", numAd);
-        request.getRequestDispatcher("crudProduct.jsp").forward(request, response);
+        request.getRequestDispatcher("crudProductDetail.jsp").forward(request, response);
 
     }
 

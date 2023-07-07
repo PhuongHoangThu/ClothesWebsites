@@ -23,7 +23,7 @@
                 <div class="table-title">
                     <div class="row">
                         <div class="col-sm-6">
-                            <h2>Manage <b>Product</b></h2>
+                            <h2> ${sessionScope.product.name}</h2>
                         </div>
                         <div class="col-sm-6">
                             <a href="authenAd?action=add" class="btn btn-success" data-toggle="modal"><i class="material-icons">&#xE147;</i> <span>Add New Product</span></a>
@@ -35,45 +35,24 @@
                 <table class="table table-striped table-hover">
                     <thead>
                         <tr>
-                            <th>Tên sản phẩm</th>
-                            <th>Hình ảnh sản phẩm</th>
-                            <th>Giá bán sản phẩm</th>
-                            <th>Giá gốc sản phẩm</th>
-                            <th>Mô tả sản phẩm</th>
-                            <th>Ngày tạo</th>
-                            <th>Ngày sửa</th>
+                            <th>Tên size</th>
                             <th>Số lượng</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <c:forEach items="${sessionScope.listAd}" var = "listProduct">
-                            <tr>
-                                <td><a href="detailProductAd?pid=${listProduct.id}">${listProduct.name}</a></td>
-                                <td><img width="40px" height="40px" src="${listProduct.image}" ></td>
-                                <td>${listProduct.price}</td>
-                                <td>${listProduct.priceOriginal}</td>
-                                <td>${listProduct.description}</td>
-                                <td>${listProduct.createDate}</td>
-                                <td>${listProduct.updateDate}</td>
-                                <td>${listProduct.quantity}</td>
-                                <td>
-                                    <a href="#editEmployeeModal" class="edit" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
-                                    <a href="#deleteEmployeeModal" class="delete" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
-                                </td>
-                            </tr>
+                        <c:forEach items="${sessionScope.productDetail}" var="s">
+                        <tr>
+                            <td>${s.name}</td>
+                            <td>${s.quantity}</td>
+                            <td>
+                                <a href="#editEmployeeModal" class="edit" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
+                                <a href="#deleteEmployeeModal" class="delete" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
+                            </td>
+                        </tr>
                         </c:forEach>
+
                     </tbody>
                 </table>
-                <div class="clearfix">
-                    <ul class="pagination">
-                        <li class="page-item disabled"><a href="#">Previous</a></li>
-                            <c:set var="pageAd" value="${requestScope.pageAd}"></c:set>
-                            <c:forEach begin="${1}" end="${requestScope.numAd}" var="i" >
-                            <li class="page-item active"><a class="page-link" href="crudproduct?pageAd=${i}">${i}</a></li>
-                            </c:forEach>
-                        <li class="page-item"><a href="#" class="page-link">Next</a></li>
-                    </ul>
-                </div>
             </div>
         </div>
         <!-- Edit Modal HTML -->

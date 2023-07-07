@@ -3,9 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
 package Controller;
-
-import Dal.ProductDAO;
-import Model.Product;
+import Model.UserData;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -14,14 +12,13 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import java.util.List;
 
 /**
  *
  * @author HP
  */
-@WebServlet(name = "CrudProductServlet", urlPatterns = {"/crudproduct"})
-public class CrudProductServlet extends HttpServlet {
+@WebServlet(name = "AuthenServlet", urlPatterns = {"/authenAd"})
+public class AuthenServletAd extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -40,10 +37,10 @@ public class CrudProductServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet CrudProductServlet</title>");
+            out.println("<title>Servlet AuthenServlet</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet CrudProductServlet at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet AuthenServlet at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -62,27 +59,39 @@ public class CrudProductServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         //processRequest(request, response);
+        PrintWriter out = response.getWriter();
+        String action = request.getParameter("action");
         HttpSession session = request.getSession();
-        ProductDAO p = new ProductDAO();
-        List<Product> listAd = p.getAllProducts();
-        int pageAd, numperpage = 12;
-        int sizeAd = listAd.size();
-        int numAd = (sizeAd % numperpage == 0 ? (sizeAd / numperpage) : (sizeAd / numperpage + 1));
-        String xpageAd = request.getParameter("pageAd");
-        if (xpageAd == null) {
-            pageAd = 1;
-        } else {
-            pageAd = Integer.parseInt(xpageAd);
-        }
-        int start, end;
-        start = (pageAd - 1) * numperpage;
-        end = Math.min(pageAd * numperpage, sizeAd);
-        List<Product> listSubAd = p.getListByPage(listAd, start, end);
-        session.setAttribute("listAd", listSubAd);
-        request.setAttribute("pageAd", pageAd);
-        request.setAttribute("numAd", numAd);
-        request.getRequestDispatcher("crudProduct.jsp").forward(request, response);
+        UserData account = (UserData) session.getAttribute("account");
+        if (account == null || account.getRole()!=2) {
+            response.sendRedirect("login");
+        } else if (action.equals("add")) {
+            response.sendRedirect("addProductAd.jsp");
 
+//        } else if (action.equals("delete")) {
+//            String id_raw = request.getParameter("id");
+//            int id;
+//            try {
+//                id = Integer.parseInt(id_raw);
+//                CategoryDAO cdb = new CategoryDAO();
+//                cdb.deleteteCategoryByID(id);
+//            } catch (Exception e) {
+//                System.out.println(e);
+//            }
+//            response.sendRedirect("list");
+//        } else if (action.equals("update")) {
+//            String id_raw = request.getParameter("id");
+//            int id;
+//            CategoryDAO cdb = new CategoryDAO();
+//            try {
+//                id = Integer.parseInt(id_raw);
+//                Category c = cdb.getCategoryByID(id);
+//                request.setAttribute("category", c);
+//                request.getRequestDispatcher("update.jsp").forward(request, response);
+//            } catch (Exception e) {
+//            }
+ //           response.sendRedirect("list");
+        }
     }
 
     /**

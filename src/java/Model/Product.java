@@ -34,8 +34,9 @@ public class Product {
     private String color;
     private String material;
     private int priceOriginal;
+    private int quantitySold;
 
-    public Product(int id, String name, int price, String image, String description, String createDate, String updateDate, Category category, int quantity, String color, String material, int priceOriginal) {
+    public Product(int id, String name, int price, String image, String description, String createDate, String updateDate, Category category, int quantity, String color, String material, int priceOriginal, int quantitySold) {
         this.id = id;
         this.name = name;
         this.price = price;
@@ -48,6 +49,7 @@ public class Product {
         this.color = color;
         this.material = material;
         this.priceOriginal = priceOriginal;
+        this.quantitySold = quantitySold;
     }
     public Product() {
     }
@@ -147,6 +149,15 @@ public class Product {
     public void setPriceOriginal(int priceOriginal) {
         this.priceOriginal = priceOriginal;
     }
+
+    public int getQuantitySold() {
+        return quantitySold;
+    }
+
+    public void setQuantitySold(int quantitySold) {
+        this.quantitySold = quantitySold;
+    }
+    
     public Sale getProductSale(){
         ProductDAO p = new ProductDAO();
         return p.getSaleProductByPid(id);

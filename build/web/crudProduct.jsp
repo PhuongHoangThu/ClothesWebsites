@@ -26,7 +26,7 @@
                             <h2>Manage <b>Product</b></h2>
                         </div>
                         <div class="col-sm-6">
-                            <a href="addProduct" class="btn btn-success" data-toggle="modal"><i class="material-icons">&#xE147;</i> <span>Add New Product</span></a>
+                            <a href="authenAd?action=add" class="btn btn-success" data-toggle="modal"><i class="material-icons">&#xE147;</i> <span>Add New Product</span></a>
                             <a href="deleteProduct" class="btn btn-danger" data-toggle="modal"><i class="material-icons">&#xE15C;</i> <span>Delete</span></a>						
                         </div>
                     </div>
@@ -46,31 +46,31 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <c:forEach items="${sessionScope.listProduct}" var = "listProduct"></c:forEach>
+                        <c:forEach items="${sessionScope.listAd}" var = "listProduct">
                             <tr>
-                             <td>${listProduct.ProductName}</td>
-                            <td><img width="40px" height="40px" src="${listNew.image}" ></td>
-                            <td>${listProduct.price}</td>
-                            <td>${listProduct.priceOriginal}</td>
-                            <td>${listProduct.description}</td>
-                            <td>${listProduct.createDate}</td>
-                            <td>${listProduct.updateDate}</td>
-                            <td>
-                                <a href="#editEmployeeModal" class="edit" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
-                                <a href="#deleteEmployeeModal" class="delete" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
-                            </td>
-                        </tr>
+                                <td><a href="detailProductAd?pid=${listProduct.id}">${listProduct.name}</a></td>
+                                <td><img width="40px" height="40px" src="${listProduct.image}" ></td>
+                                <td>${listProduct.price}</td>
+                                <td>${listProduct.priceOriginal}</td>
+                                <td>${listProduct.description}</td>
+                                <td>${listProduct.createDate}</td>
+                                <td>${listProduct.updateDate}</td>
+                                <td>${listProduct.quantity}</td>
+                                <td>
+                                    <a href="#editEmployeeModal" class="edit" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
+                                    <a href="#deleteEmployeeModal" class="delete" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
+                                </td>
+                            </tr>
+                        </c:forEach>
                     </tbody>
                 </table>
                 <div class="clearfix">
-                    <div class="hint-text">Showing <b>5</b> out of <b>25</b> entries</div>
                     <ul class="pagination">
                         <li class="page-item disabled"><a href="#">Previous</a></li>
-                        <li class="page-item"><a href="#" class="page-link">1</a></li>
-                        <li class="page-item"><a href="#" class="page-link">2</a></li>
-                        <li class="page-item active"><a href="#" class="page-link">3</a></li>
-                        <li class="page-item"><a href="#" class="page-link">4</a></li>
-                        <li class="page-item"><a href="#" class="page-link">5</a></li>
+                            <c:set var="pageAd" value="${requestScope.pageAd}"></c:set>
+                            <c:forEach begin="${1}" end="${requestScope.numAd}" var="i" >
+                            <li class="page-item active"><a class="page-link" href="crudproduct?pageAd=${i}">${i}</a></li>
+                            </c:forEach>
                         <li class="page-item"><a href="#" class="page-link">Next</a></li>
                     </ul>
                 </div>
