@@ -35,6 +35,11 @@ public class SizeNameAndQuantity {
     public void setQuantity(int quantity) {
         this.quantity = quantity;
     }
+
+    @Override
+    public String toString() {
+        return "SizeNameAndQuantity{" + "name=" + name + ", quantity=" + quantity + '}';
+    }
     
     
 }

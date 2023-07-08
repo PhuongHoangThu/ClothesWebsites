@@ -86,18 +86,18 @@ public class AuthenServletAd extends HttpServlet {
             } catch (Exception e) {
             }
 
-//        } else if (action.equals("delete")) {
-//            String id_raw = request.getParameter("id");
-//            int id;
-//            try {
-//                id = Integer.parseInt(id_raw);
-//                CategoryDAO cdb = new CategoryDAO();
-//                cdb.deleteteCategoryByID(id);
-//            } catch (Exception e) {
-//                System.out.println(e);
-//            }
-//            response.sendRedirect("list");
-            //           response.sendRedirect("list");
+        } else if (action.equals("delete")) {
+            String pid_raw = request.getParameter("pid");
+
+            int pid;
+            try {
+                pid = Integer.parseInt(pid_raw);
+                ProductDAO cdb = new ProductDAO();
+                cdb.deleteteCategoryByID(pid);
+                response.sendRedirect("crudproduct");
+            } catch (Exception e) {
+                out.println(e);
+            }
         }
     }
 

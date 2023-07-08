@@ -129,19 +129,59 @@ public class ProductDAO extends DBContext {
             Size s = new Size();
             int oid = pid;
             for (SizeNameAndQuantity i : listQuantity) {
-                String sql2 = "INSERT INTO [dbo].[Size]\n"
-                        + "           ([name]\n"
-                        + "           ,[pid]\n"
-                        + "           ,[quantity])\n"
-                        + "VALUES (?,?,?)";
+                String sql2 = "UPDATE [dbo].[Size]\n"
+                        + "   SET [name] = ?\n"
+                        + "      ,[pid] = ?\n"
+                        + "      ,[quantity] = ?\n"
+                        + " WHERE id = ?";
                 PreparedStatement st2 = connection.prepareStatement(sql2);
                 st2.setString(1, i.getName());
                 st2.setInt(2, oid);
                 st2.setInt(3, i.getQuantity());
+                st2.setInt(4, getProductByidAndSize(oid, i.getName()).getId());
+                System.out.println("1" + getProductByidAndSize(oid, i.getName()).getId());
                 st2.executeUpdate();
             }
         } catch (Exception e) {
+            System.out.println(e);
         }
+    }
+
+    public void deleteteCategoryByID(int pid) {
+        try {
+            // xóa sản phẩm có d = ? ở trong bảng size
+            String sql = "DELETE FROM [dbo].[Size]\n"
+                    + "      WHERE pid=?";
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setInt(1, pid);
+            st.executeUpdate();
+            // xóa sản phẩm có d = ? ở trong bảng Sale
+            String sql1 = "DELETE FROM [dbo].[Sale]\n"
+                    + "      WHERE pid=?";
+            PreparedStatement st1 = connection.prepareStatement(sql1);
+            st.setInt(1, pid);
+            st.executeUpdate();
+            //xóa sản phẩm trong bảng OrderDetail
+            String sql2 = "DELETE FROM [dbo].[OrderDetail]\n"
+                    + "      WHERE pid=?";
+            PreparedStatement st2 = connection.prepareStatement(sql2);
+            st.setInt(1, pid);
+            st.executeUpdate();
+            // xóa sản phẩm trong bảng Feedback
+            String sql3 = "DELETE FROM [dbo].[Feedback]\n"
+                    + "      WHERE pid=?";
+            PreparedStatement st3 = connection.prepareStatement(sql3);
+            st.setInt(1, pid);
+            st.executeUpdate();
+            // Xóa trong bảng product
+            String sql4 = "delete from Product where id=?";
+            PreparedStatement st4 = connection.prepareStatement(sql4);
+            st4.setInt(1, pid);
+            st4.executeUpdate();
+        } catch (Exception e) {
+
+        }
+
     }
 
     public List<Product> getAllProductsByCategoryID(int cid) {
@@ -491,34 +531,41 @@ public class ProductDAO extends DBContext {
     }
 
     public static void main(String[] args) {
-        ProductDAO dao = new ProductDAO();
-        String name = "Áo sơ mi";
-        String image = "img/aosomi.png";
-        String description = "Đep";
-        String createDate = "2023/07/08";
-        String updateDate = "2023/07/08";
-        String color = "Xanh";
-        String material = "Cotton";
-        List<SizeNameAndQuantity> listQuantity = new ArrayList<>();
-        int price = 300000;
-        int quantityXS = 3;
-        int quantityS = 4;
-        int quantityM = 5;
-        int quantityL = 6;
-        int quantityXL = 7;
-        listQuantity.add(new SizeNameAndQuantity("S", quantityS));
-        listQuantity.add(new SizeNameAndQuantity("M", quantityM));
-        listQuantity.add(new SizeNameAndQuantity("L", quantityL));
-        listQuantity.add(new SizeNameAndQuantity("XL", quantityXL));
-        int quantity = quantityXS + quantityS + quantityL + quantityXL + quantityM;
-        int priceOriginal = 100000;
-        int quantitySold = 0;
-        int cid = 15;
-        Category c = new Category();
-        c = dao.getCategoryById(cid);
-        System.out.println(dao.getAllProducts().size());
-        dao.insertNewProduct(name, price, image, description, createDate, updateDate, quantity, color, material, priceOriginal, quantitySold, c, listQuantity);
-        System.out.println(dao.getAllProducts().size());
+//        ProductDAO dao = new ProductDAO();
+//        String name = "Áo sơ mi";
+//        String image = "img/aosomi.png";
+//        String description = "Đep";
+//        String createDate = "2023/07/08";
+//        String updateDate = "2023/07/08";
+//        String color = "Xanh";
+//        String material = "Cotton";
+//        List<SizeNameAndQuantity> listQuantity = new ArrayList<>();
+//        int price = 300000;
+//        int quantityS = 4;
+//        int quantityM = 5;
+//        int quantityL = 6;
+//        int quantityXL = 7;
+//        listQuantity.add(new SizeNameAndQuantity("S", quantityS));
+//        listQuantity.add(new SizeNameAndQuantity("M", quantityM));
+//        listQuantity.add(new SizeNameAndQuantity("L", quantityL));
+//        listQuantity.add(new SizeNameAndQuantity("XL", quantityXL));
+//        int quantity = quantityS + quantityL + quantityXL + quantityM;
+//        int priceOriginal = 100000;
+//        int quantitySold = 0;
+//        int cid = 15;
+//        Category c = new Category();
+//        c = dao.getCategoryById(cid);
+//        System.out.println(dao.getAllProducts().size());
+//        dao.updateProduct(94, name, price, image, description, createDate, updateDate, quantity, color, material, priceOriginal, quantitySold, c, listQuantity);
+//        System.out.println(dao.getAllProducts().size());
+//        List<Integer> list = new ArrayList<>();
+//        list.add(1);
+//        list.add(1);
+//        list.add(1);
+//        System.out.println("trước : " + list.size());
+//        list.removeAll(list);
+//        System.out.println("sau : " + list.size());
+
     }
 
 }

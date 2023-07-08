@@ -63,6 +63,7 @@ public class UpdateProductAd extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         //processRequest(request, response);
+       
         PrintWriter out = response.getWriter();
         String name = request.getParameter("name");
         String price_raw = request.getParameter("price");
@@ -79,26 +80,22 @@ public class UpdateProductAd extends HttpServlet {
         String priceOriginal_raw = request.getParameter("priceOriginal");
         String quantitySold_raw = request.getParameter("quantitySold");
         String cid_raw = request.getParameter("cid");
-        out.print(cid_raw);
         String pid_raw = request.getParameter("pid");
-        out.print(pid_raw);
         List<SizeNameAndQuantity> listQuantity = new ArrayList<>();
+        
         int pid, price, quantity, quantityXS, quantityS, quantityM, quantityL, quantityXL, priceOriginal, quantitySold, cid;
         try {
             pid = Integer.parseInt(pid_raw);  
-            out.println("pid" +pid);
             price = Integer.parseInt(price_raw);
-            out.println("price" +price);
             quantityS = Integer.parseInt(quantityS_raw);
-            out.println("pid" +quantityS);
             quantityM = Integer.parseInt(quantityM_raw);
-            out.println("pid" +quantityM);
             quantityL = Integer.parseInt(quantityL_raw);
-            out.println("pid" +quantityL);
             quantityXL = Integer.parseInt(quantityXL_raw);
-            out.println("pid" +quantityXL);
+            out.println(quantityS);
+            out.println(quantityM);
+            out.println(quantityL);
+            out.println(quantityXL);
             priceOriginal = Integer.parseInt(priceOriginal_raw);
-            out.println("pid" +priceOriginal);
             listQuantity.add(new SizeNameAndQuantity("S", quantityS));
             listQuantity.add(new SizeNameAndQuantity("M", quantityM));
             listQuantity.add(new SizeNameAndQuantity("L", quantityL));

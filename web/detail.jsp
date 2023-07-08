@@ -192,11 +192,6 @@
                     <form name="f" action="" method="post">
                         <div class="d-flex mb-3">
                             <p class="text-dark font-weight-medium mb-0 mr-3">Sizes:</p>
-
-                            <div class="custom-control custom-radio custom-control-inline">
-                                <input type="radio" class="custom-control-input" id="size-1" name="size" value="XS" checked>
-                                <label class="custom-control-label" for="size-1">XS</label>
-                            </div>
                             <div class="custom-control custom-radio custom-control-inline">
                                 <input type="radio" class="custom-control-input" id="size-2" name="size" value="S">
                                 <label class="custom-control-label" for="size-2">S</label>

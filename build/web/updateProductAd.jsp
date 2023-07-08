@@ -51,7 +51,6 @@
                             <div class="col-md-12"><label class="labels">Danh mục</label>
                                 <select name="cid">
                                     <option value="13">Váy</option>
-                                    <option value="14">Phụ Kiện</option>
                                     <option value="15">Áo</option>
                                     <option value="16">Quần</option>
                                 </select>
@@ -64,8 +63,8 @@
                             </div>
                             <div class="col-md-12"><label class="labels">Màu sắc</label><input type="text" class="form-control" value="${product.color}" name="color" required></div>
                             <div class="col-md-12"><label class="labels">Chất liệu</label><input type="text" class="form-control" value="${product.material}"  name="material" required></div>
-                            <div class="col-md-12"><label class="labels"></label><input type="text" hidden class="form-control"  value="0" name="quantitySold" required></div>
-                            <div class="col-md-12"><label class="labels"></label><input type="text" hidden class="form-control"  value="6" name="pid" required></div>
+                            <div class="col-md-12"><label class="labels"></label><input type="text" hidden class="form-control"  value="${product.quantitySold}" name="quantitySold" required></div>
+                            <div class="col-md-12"><label class="labels"></label><input type="text" hidden class="form-control"  value="${product.id}" name="pid" required></div>
                         </div>
                         <div class="mt-5 text-center"><input class="btn btn-primary profile-button" type="submit" value="Save"></div>                            
                     </form>

@@ -63,15 +63,29 @@ public class OrderDAO extends DBContext {
 
                 }
             }
-            //cap nhat lai so luong san pham
-            String sql3 = "update size set quantity=quantity-? where pid=? and name=?";
+            //cap nhat lai so luong san pham trong bảng size
+            String sql3 = "update size set quantity=quantity-? where pid=? and name =? ";
             PreparedStatement st3 = connection.prepareStatement(sql3);
             for (Item i : cart.getItems()) {
                 st3.setInt(1, i.getQuantity());
                 st3.setInt(2, i.getProduct().getId());
-                st3.setString(3,i.getSize());
+                st3.setString(3, i.getSize());
                 st3.executeUpdate();
-                System.out.println(i+" "+i.getSize());
+                System.out.println(i + " " + i.getSize());
+            }
+            ////cap nhat lai so luong san pham trong bảng product
+            String sql4 = "update product set quantity = quantity-? where pid = ?";
+            String sql5 = "update product set quantitySold = quantitySold-? where pid = ?";
+            PreparedStatement st4 = connection.prepareStatement(sql4);
+            PreparedStatement st5 = connection.prepareStatement(sql5);
+            for (Item i : cart.getItems()) {
+                int count = cart.getNumberItemByPid(i.getProduct().getId());
+                st4.setInt(1, count);
+                st4.setInt(2, i.getProduct().getId());
+                st4.executeUpdate();
+                st5.setInt(1, count);
+                st5.setInt(2, i.getProduct().getId());
+                st5.executeUpdate();
             }
         } catch (SQLException e) {
             System.out.println(e);

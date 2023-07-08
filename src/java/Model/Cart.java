@@ -44,6 +44,15 @@ public class Cart {
         }
         return null;
     }
+    public int getNumberItemByPid(int pid) {
+        int count =0;
+        for (Item i : items) {
+            if (i.getProduct().getId() == pid) {
+                count += i.getQuantity();
+            }
+        }
+        return count;
+    }
 
     public void addItem(Item t) {
         int id = t.getProduct().getId();

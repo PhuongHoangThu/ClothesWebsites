@@ -89,7 +89,6 @@ public class AddNewProduct extends HttpServlet {
             quantityL = Integer.parseInt(quantityL_raw);
             quantityXL = Integer.parseInt(quantityXL_raw);
             priceOriginal = Integer.parseInt(priceOriginal_raw);
-            listQuantity.add(new SizeNameAndQuantity("XS", quantityXS));
             listQuantity.add(new SizeNameAndQuantity("S", quantityS));
             listQuantity.add(new SizeNameAndQuantity("M", quantityM));
             listQuantity.add(new SizeNameAndQuantity("L", quantityL));
