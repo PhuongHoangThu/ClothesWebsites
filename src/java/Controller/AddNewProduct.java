@@ -56,6 +56,27 @@ public class AddNewProduct extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         //processRequest(request, response);
+        String name = request.getParameter("name");
+        String price_raw = request.getParameter("price");
+        String image = request.getParameter("image");
+        String description = request.getParameter("description");
+        String createDate = request.getParameter("createDate");
+        String category = request.getParameter("category");
+        String quantity_raw = request.getParameter("quantity");
+        String color = request.getParameter("color");
+        String material = request.getParameter("material");
+        String priceOriginal_raw = request.getParameter("priceOriginal");
+        String quantitySold_raw = request.getParameter("quantitySold");
+        String cid_raw = request.getParameter("cid");
+        int price,quantity,priceOriginal,quantitySold, cid;
+        try {
+            price = Integer.parseInt("price_raw");
+            quantity = Integer.parseInt("quantity_raw");
+            priceOriginal = Integer.parseInt("priceOriginal_raw");
+            quantitySold = Integer.parseInt("quantitySold_raw");            
+            cid = Integer.parseInt("cid_raw");
+        } catch (Exception e) {
+        }
         
     } 
 
