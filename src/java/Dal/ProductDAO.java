@@ -8,6 +8,7 @@ import Model.Category;
 import Model.Product;
 import Model.Sale;
 import Model.Size;
+import Model.SizeNameAndQuantity;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
@@ -47,7 +48,101 @@ public class ProductDAO extends DBContext {
         }
         return list;
     }
-    
+
+    public void insertNewProduct(String name, int price, String image, String description, String createDate, String updateDate, int quantity, String color, String material, int priceOriginal, int quantitySold, Category c, List<SizeNameAndQuantity> listQuantity) {
+        String sql = "INSERT INTO [dbo].[Product]\n"
+                + "           ([ProductName],[Price],[image] ,[Description],[CreateDate],[UpdateDate],[cid],[quantity],[Color],[Material],[QuantitySold],[OriginalPrice])\n"
+                + "VALUES\n"
+                + "           (?,?,?,?,?,?,?,?,?,?,?,?)";
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setString(1, name);
+            st.setInt(2, price);
+            st.setString(3, image);
+            st.setString(4, description);
+            st.setString(5, createDate);
+            st.setString(6, updateDate);
+            st.setInt(7, c.getId());
+            st.setInt(8, quantity);
+            st.setString(9, color);
+            st.setString(10, material);
+            st.setInt(11, quantitySold);
+            st.setInt(12, priceOriginal);
+            st.executeUpdate();
+            // lấy pid của sản phẩm vừa thêm vào
+            String sql1 = "select top 1 id from [product] order by id desc";
+            PreparedStatement st1 = connection.prepareStatement(sql1);
+            ResultSet rs = st1.executeQuery();
+            //add bang Size
+            Size s = new Size();
+            if (rs.next()) {
+                int oid = rs.getInt("id");
+                for (SizeNameAndQuantity i : listQuantity) {
+                    String sql2 = "INSERT INTO [dbo].[Size]\n"
+                            + "           ([name]\n"
+                            + "           ,[pid]\n"
+                            + "           ,[quantity])\n"
+                            + "VALUES (?,?,?)";
+                    PreparedStatement st2 = connection.prepareStatement(sql2);
+                    st2.setString(1, i.getName());
+                    st2.setInt(2, oid);
+                    st2.setInt(3, i.getQuantity());
+                    st2.executeUpdate();
+                }
+            }
+        } catch (Exception e) {
+        }
+    }
+
+    public void updateProduct(int pid, String name, int price, String image, String description, String createDate, String updateDate, int quantity, String color, String material, int priceOriginal, int quantitySold, Category c, List<SizeNameAndQuantity> listQuantity) {
+        String sql = "UPDATE [dbo].[Product]\n"
+                + "   SET [ProductName] = ?\n"
+                + "      ,[Price] = ?\n"
+                + "      ,[image] = ?\n"
+                + "      ,[Description] =?\n"
+                + "      ,[CreateDate] = ?\n"
+                + "      ,[UpdateDate] = ?\n"
+                + "      ,[cid] = ?\n"
+                + "      ,[quantity] = ?\n"
+                + "      ,[Color] = ?\n"
+                + "      ,[Material] = ?\n"
+                + "      ,[QuantitySold] =?\n"
+                + "      ,[OriginalPrice] = ?\n"
+                + " WHERE id = ?";
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setString(1, name);
+            st.setInt(2, price);
+            st.setString(3, image);
+            st.setString(4, description);
+            st.setString(5, createDate);
+            st.setString(6, updateDate);
+            st.setInt(7, c.getId());
+            st.setInt(8, quantity);
+            st.setString(9, color);
+            st.setString(10, material);
+            st.setInt(11, quantitySold);
+            st.setInt(12, priceOriginal);
+            st.setInt(13, pid);
+            st.executeUpdate();
+            //add bang Size
+            Size s = new Size();
+            int oid = pid;
+            for (SizeNameAndQuantity i : listQuantity) {
+                String sql2 = "INSERT INTO [dbo].[Size]\n"
+                        + "           ([name]\n"
+                        + "           ,[pid]\n"
+                        + "           ,[quantity])\n"
+                        + "VALUES (?,?,?)";
+                PreparedStatement st2 = connection.prepareStatement(sql2);
+                st2.setString(1, i.getName());
+                st2.setInt(2, oid);
+                st2.setInt(3, i.getQuantity());
+                st2.executeUpdate();
+            }
+        } catch (Exception e) {
+        }
+    }
 
     public List<Product> getAllProductsByCategoryID(int cid) {
         String sql = "select * from Product";
@@ -80,14 +175,15 @@ public class ProductDAO extends DBContext {
         }
         return list;
     }
-    public List<Size> getSizeByPid(int pid){
+
+    public List<Size> getSizeByPid(int pid) {
         String sql = "select * from Size where pid = ?";
         List<Size> list = new ArrayList<>();
         try {
             PreparedStatement st = connection.prepareStatement(sql);
             st.setInt(1, pid);
             ResultSet rs = st.executeQuery();
-            while(rs.next()){
+            while (rs.next()) {
                 Size s = new Size();
                 s.setId(rs.getInt("id"));
                 s.setName(rs.getString("name"));
@@ -99,6 +195,7 @@ public class ProductDAO extends DBContext {
         }
         return list;
     }
+
     public List<Product> getNewestProduct() {
         String sql = "select top 10 percent * from Product order by createdate desc";
         List<Product> list = new ArrayList<>();
@@ -393,11 +490,35 @@ public class ProductDAO extends DBContext {
         return arr;
     }
 
-
     public static void main(String[] args) {
         ProductDAO dao = new ProductDAO();
-        //dao.getAllProductsByCategoryID(13);
-        System.out.println(dao.getSizeByPid(6).size());
+        String name = "Áo sơ mi";
+        String image = "img/aosomi.png";
+        String description = "Đep";
+        String createDate = "2023/07/08";
+        String updateDate = "2023/07/08";
+        String color = "Xanh";
+        String material = "Cotton";
+        List<SizeNameAndQuantity> listQuantity = new ArrayList<>();
+        int price = 300000;
+        int quantityXS = 3;
+        int quantityS = 4;
+        int quantityM = 5;
+        int quantityL = 6;
+        int quantityXL = 7;
+        listQuantity.add(new SizeNameAndQuantity("S", quantityS));
+        listQuantity.add(new SizeNameAndQuantity("M", quantityM));
+        listQuantity.add(new SizeNameAndQuantity("L", quantityL));
+        listQuantity.add(new SizeNameAndQuantity("XL", quantityXL));
+        int quantity = quantityXS + quantityS + quantityL + quantityXL + quantityM;
+        int priceOriginal = 100000;
+        int quantitySold = 0;
+        int cid = 15;
+        Category c = new Category();
+        c = dao.getCategoryById(cid);
+        System.out.println(dao.getAllProducts().size());
+        dao.insertNewProduct(name, price, image, description, createDate, updateDate, quantity, color, material, priceOriginal, quantitySold, c, listQuantity);
+        System.out.println(dao.getAllProducts().size());
     }
 
 }

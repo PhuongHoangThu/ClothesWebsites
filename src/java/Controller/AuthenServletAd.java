@@ -3,6 +3,10 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
 package Controller;
+
+import Dal.ProductDAO;
+import Model.Product;
+import Model.Size;
 import Model.UserData;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -12,6 +16,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import java.util.List;
 
 /**
  *
@@ -63,10 +68,23 @@ public class AuthenServletAd extends HttpServlet {
         String action = request.getParameter("action");
         HttpSession session = request.getSession();
         UserData account = (UserData) session.getAttribute("account");
-        if (account == null || account.getRole()!=2) {
+        if (account == null || account.getRole() != 2) {
             response.sendRedirect("login");
         } else if (action.equals("add")) {
             response.sendRedirect("addProductAd.jsp");
+        } else if (action.equals("update")) {
+            String id_raw = request.getParameter("pid");
+            int id;
+            ProductDAO cdb = new ProductDAO();
+            try {
+                id = Integer.parseInt(id_raw);
+                Product c = cdb.getProductByid(id);
+                List<Size> listSize = cdb.getSizeByPid(id);
+                request.setAttribute("listSize", listSize);
+                request.setAttribute("productUpdate", c);
+                request.getRequestDispatcher("updateProductAd.jsp").forward(request, response);
+            } catch (Exception e) {
+            }
 
 //        } else if (action.equals("delete")) {
 //            String id_raw = request.getParameter("id");
@@ -79,18 +97,7 @@ public class AuthenServletAd extends HttpServlet {
 //                System.out.println(e);
 //            }
 //            response.sendRedirect("list");
-//        } else if (action.equals("update")) {
-//            String id_raw = request.getParameter("id");
-//            int id;
-//            CategoryDAO cdb = new CategoryDAO();
-//            try {
-//                id = Integer.parseInt(id_raw);
-//                Category c = cdb.getCategoryByID(id);
-//                request.setAttribute("category", c);
-//                request.getRequestDispatcher("update.jsp").forward(request, response);
-//            } catch (Exception e) {
-//            }
- //           response.sendRedirect("list");
+            //           response.sendRedirect("list");
         }
     }
 

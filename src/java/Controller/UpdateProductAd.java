@@ -21,8 +21,8 @@ import java.util.List;
  *
  * @author HP
  */
-@WebServlet(name = "AddNewProduct", urlPatterns = {"/add"})
-public class AddNewProduct extends HttpServlet {
+@WebServlet(name = "UpdateProductAd", urlPatterns = {"/updateAd"})
+public class UpdateProductAd extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -41,10 +41,10 @@ public class AddNewProduct extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet AddNewProduct</title>");
+            out.println("<title>Servlet UpdateProductAd</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet AddNewProduct at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet UpdateProductAd at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -62,14 +62,14 @@ public class AddNewProduct extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        // thêm sản phẩm mới vào db thì sản phẩm mới sẽ có so lượng các size từ tính tổng các size để nhập vào các 
+        //processRequest(request, response);
+        PrintWriter out = response.getWriter();
         String name = request.getParameter("name");
         String price_raw = request.getParameter("price");
         String image = request.getParameter("image");
         String description = request.getParameter("description");
         String createDate = request.getParameter("createDate");
         String updateDate = request.getParameter("updateDate");
-        String quantityXS_raw = request.getParameter("quantityXS");
         String quantityS_raw = request.getParameter("quantityS");
         String quantityM_raw = request.getParameter("quantityM");
         String quantityL_raw = request.getParameter("quantityL");
@@ -79,33 +79,42 @@ public class AddNewProduct extends HttpServlet {
         String priceOriginal_raw = request.getParameter("priceOriginal");
         String quantitySold_raw = request.getParameter("quantitySold");
         String cid_raw = request.getParameter("cid");
+        out.print(cid_raw);
+        String pid_raw = request.getParameter("pid");
+        out.print(pid_raw);
         List<SizeNameAndQuantity> listQuantity = new ArrayList<>();
-        int price, quantity, quantityXS, quantityS, quantityM, quantityL, quantityXL, priceOriginal, quantitySold, cid;
+        int pid, price, quantity, quantityXS, quantityS, quantityM, quantityL, quantityXL, priceOriginal, quantitySold, cid;
         try {
+            pid = Integer.parseInt(pid_raw);  
+            out.println("pid" +pid);
             price = Integer.parseInt(price_raw);
-            quantityXS = Integer.parseInt(quantityXS_raw);
+            out.println("price" +price);
             quantityS = Integer.parseInt(quantityS_raw);
+            out.println("pid" +quantityS);
             quantityM = Integer.parseInt(quantityM_raw);
+            out.println("pid" +quantityM);
             quantityL = Integer.parseInt(quantityL_raw);
+            out.println("pid" +quantityL);
             quantityXL = Integer.parseInt(quantityXL_raw);
+            out.println("pid" +quantityXL);
             priceOriginal = Integer.parseInt(priceOriginal_raw);
-            listQuantity.add(new SizeNameAndQuantity("XS", quantityXS));
+            out.println("pid" +priceOriginal);
             listQuantity.add(new SizeNameAndQuantity("S", quantityS));
             listQuantity.add(new SizeNameAndQuantity("M", quantityM));
             listQuantity.add(new SizeNameAndQuantity("L", quantityL));
             listQuantity.add(new SizeNameAndQuantity("XL", quantityXL));
-            quantity = quantityXS + quantityS + quantityL + quantityXL + quantityM;
+            quantity =  quantityS + quantityL + quantityXL + quantityM;
             priceOriginal = Integer.parseInt(priceOriginal_raw);
             quantitySold = Integer.parseInt(quantitySold_raw);
             cid = Integer.parseInt(cid_raw);
             Category c = new Category();
             ProductDAO d = new ProductDAO();
             c = d.getCategoryById(cid);
-            d.insertNewProduct(name, price, image, description, createDate, updateDate, quantity, color, material, priceOriginal, quantitySold, c, listQuantity);
+            d.updateProduct(pid, name, price, image, description, createDate, updateDate, quantity, color, material, priceOriginal, quantitySold, c, listQuantity);
             response.sendRedirect("crudproduct");
         } catch (Exception e) {
+            out.print(e);
         }
-
     }
 
     /**
