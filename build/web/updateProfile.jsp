@@ -95,8 +95,8 @@
                             <span class="badge">Đăng nhập</span>
                         </a>
                     </c:if>
-                    <a href="" class="btn border">
-                        <i class="fas fa-shopping-cart text-primary"></i>
+                    <a href="cart.jsp" class="btn border">
+                        <i class="fas fa-shopping-cart text-primary">( ${sessionScope.totalItems==null?0:sessionScope.totalItems} )</i>
                         <span class="badge"></span>
                     </a>
                 </div>

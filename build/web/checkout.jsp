@@ -92,8 +92,8 @@
                             <span class="badge">Đăng nhập</span>
                         </a>
                     </c:if>
-                    <a href="" class="btn border">
-                        <i class="fas fa-shopping-cart text-primary"></i>
+                    <a href="cart.jsp" class="btn border">
+                        <i class="fas fa-shopping-cart text-primary">( ${sessionScope.totalItems==null?0:sessionScope.totalItems} )</i>
                         <span class="badge"></span>
                     </a>
                 </div>
@@ -132,7 +132,7 @@
                                     <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Pages</a>
                                     <div class="dropdown-menu rounded-0 m-0">
                                         <a href="cart.jsp" class="dropdown-item">Giỏ hàng</a>
-                                        <a href="checkout.jsp" class="dropdown-item">Đăng xuất</a>
+                                        <a href="checkout" class="dropdown-item">Đặt hàng</a>
                                     </div>
                                 </div>
                                 <a href="contact.jsp" class="nav-item nav-link">Liên hệ</a>
@@ -148,11 +148,11 @@
         <!-- Page Header Start -->
         <div class="container-fluid bg-secondary mb-5">
             <div class="d-flex flex-column align-items-center justify-content-center" style="min-height: 300px">
-                <h1 class="font-weight-semi-bold text-uppercase mb-3">Checkout</h1>
+                <h1 class="font-weight-semi-bold text-uppercase mb-3">Đặt hàng</h1>
                 <div class="d-inline-flex">
-                    <p class="m-0"><a href="home">Home</a></p>
+                    <p class="m-0"><a href="home">Trang chủ</a></p>
                     <p class="m-0 px-2">-</p>
-                    <p class="m-0">Checkout</p>
+                    <p class="m-0">Đặt hàng</p>
                 </div>
             </div>
         </div>
@@ -192,7 +192,7 @@
                                 <h4 class="font-weight-semi-bold m-0">Đơn mua</h4>
                             </div>
                             <div class="card-body">
-                                <h5 class="font-weight-medium mb-3">Products</h5>
+                                <h5 class="font-weight-medium mb-3">Sản phẩm</h5>
                                 <c:set var="o" value="${sessionScope.cart}"></c:set>
                                 <c:forEach items="${o.items}" var="i">
                                     <div class="d-flex justify-content-between">
@@ -208,7 +208,7 @@
                                 <hr class="mt-0">
                                 <div class="card-footer border-secondary bg-transparent">
                                     <div class="d-flex justify-content-between mt-2">
-                                        <h5 class="font-weight-bold">Total</h5>
+                                        <h5 class="font-weight-bold">Tổng tiền</h5>
                                         <c:set var="totalMoney" value ="0"  ></c:set>
                                         <c:forEach items="${o.items}" var="i">
                                             <c:set var="totalMoney" value="${totalMoney + i.quantity*i.price}"></c:set>
@@ -219,7 +219,7 @@
                             </div>
                             <div class="card border-secondary mb-5">
                                 <div class="card-footer border-secondary bg-transparent">
-                                    <button class="btn btn-lg btn-block btn-primary font-weight-bold my-3 py-3" onclick="order()">Order</button>
+                                    <button class="btn btn-lg btn-block btn-primary font-weight-bold my-3 py-3" onclick="order()">Đặt hàng</button>
                                 </div>
                             </div>
                         </div>

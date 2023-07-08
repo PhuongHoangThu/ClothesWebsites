@@ -95,8 +95,8 @@
                             <span class="badge">Đăng nhập</span>
                         </a>
                     </c:if>
-                    <a href="" class="btn border">
-                        <i class="fas fa-shopping-cart text-primary"></i>
+                    <a href="cart.jsp" class="btn border">
+                        <i class="fas fa-shopping-cart text-primary">( ${sessionScope.totalItems==null?0:sessionScope.totalItems} )</i>
                         <span class="badge"></span>
                     </a>
                 </div>
@@ -138,7 +138,7 @@
                                     <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Trang</a>
                                     <div class="dropdown-menu rounded-0 m-0">
                                         <a href="cart.jsp" class="dropdown-item">Giỏ hàng</a>
-                                        <a href="checkout.jsp" class="dropdown-item">Đăng xuất</a>
+                                        <a href="checkout" class="dropdown-item">Đăng xuất</a>
                                     </div>
                                 </div>
                                 <a href="contact.jsp" class="nav-item nav-link">Liên hệ</a>
