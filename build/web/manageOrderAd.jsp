@@ -23,42 +23,36 @@
                 <div class="table-title">
                     <div class="row">
                         <div class="col-sm-6">
-                            <h2>Quản lý <b>sản phẩm</b></h2>
+                            <h2>Quản lý <b>đơn đặt hàng</b></h2>
                         </div>
                         <div class="col-sm-6">
-                            <a href="authenAd?action=add" class="btn btn-success" data-toggle="modal"><i class="material-icons">&#xE147;</i> <span>Add New Product</span></a>
+                            <a href="authenOrderAd?action=update" class="btn btn-success" data-toggle="modal"><i class="material-icons">&#xE147;</i> <span>Edit Order</span></a>
                         </div>
-
                     </div>
                 </div>
 
                 <table class="table table-striped table-hover">
                     <thead>
                         <tr>
-                            <th>Tên sản phẩm</th>
-                            <th>Hình ảnh sản phẩm</th>
-                            <th>Giá bán sản phẩm</th>
-                            <th>Giá gốc sản phẩm</th>
-                            <th>Mô tả sản phẩm</th>
-                            <th>Ngày tạo</th>
-                            <th>Ngày sửa</th>
-                            <th>Số lượng</th>
+                            <th>Mã đơn đặt hàng</th>
+                            <th>Tên người nhận</th>
+                            <th>Số điện thoại người nhận</th>
+                            <th>Địa chỉ giao hàng</th>
+                            <th>Tổng tiền hàng</th>
+                            <th>Tình trạng giao hàng</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <c:forEach items="${sessionScope.listAd}" var = "listProduct">
+                        <c:forEach items="${sessionScope.listOrderAd}" var = "listProduct">
                             <tr>
-                                <td><a href="detailProductAd?pid=${listProduct.id}">${listProduct.name}</a></td>
-                                <td><img width="40px" height="40px" src="${listProduct.image}" ></td>
-                                <td>${listProduct.price}</td>
-                                <td>${listProduct.priceOriginal}</td>
-                                <td>${listProduct.description}</td>
-                                <td>${listProduct.createDate}</td>
-                                <td>${listProduct.updateDate}</td>
-                                <td>${listProduct.quantity}</td>
+                                <td>${listProduct.id}</td>
+                                <td>${listProduct.nameReceive}</td>
+                                <td>${listProduct.phoneReceive}</td>
+                                <td>${listProduct.addressReceive}</td>
+                                <td>${listProduct.totalMoney}</td>
+                                <td>${listProduct.status}</td>
                                 <td>
-                                    <a href="authenAd?action=update&pid=${listProduct.id}" class="edit" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
-                                    <a href="#" onclick="doDelete('${listProduct.id}')" class="delete" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
+                                    <a href="authenOrderAd?action=update&oid=${listProduct.id}" class="edit" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
                                 </td>
                             </tr>
                         </c:forEach>
@@ -67,9 +61,9 @@
                 <div class="clearfix">
                     <ul class="pagination">
                         <li class="page-item disabled"><a href="#">Previous</a></li>
-                            <c:set var="pageAd" value="${requestScope.pageAd}"></c:set>
-                            <c:forEach begin="${1}" end="${requestScope.numAd}" var="i" >
-                            <li class="page-item active"><a class="page-link" href="crudproduct?pageAd=${i}">${i}</a></li>
+                            <c:set var="pageOrderAd" value="${sessionScope.pageOrderAd}"></c:set>
+                            <c:forEach begin="${1}" end="${sessionScope.numOrderAd}" var="i" >
+                            <li class="page-item active"><a class="page-link" href="list?pageOrderAd=${i}">${i}</a></li>
                             </c:forEach>
                         <li class="page-item"><a href="#" class="page-link">Next</a></li>
                     </ul>

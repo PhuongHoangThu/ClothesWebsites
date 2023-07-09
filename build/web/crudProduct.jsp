@@ -28,6 +28,7 @@
                         <div class="col-sm-6">
                             <a href="authenAd?action=add" class="btn btn-success" data-toggle="modal"><i class="material-icons">&#xE147;</i> <span>Add New Product</span></a>
                         </div>
+
                     </div>
                 </div>
 

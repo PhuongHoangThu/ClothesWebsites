@@ -14,20 +14,20 @@ public class Orders {
     private String phoneReceive, orderDate;
     private boolean status;
     private UserData user;
-    private String NameReceive, AddressReceive;
+    private String nameReceive, addressReceive;
     private int totalMoney;
 
     public Orders() {
     }
 
-    public Orders(int id, String phoneReceive, String orderDate, boolean status, UserData user, String NameReceive, String AddressReceive, int totalMoney) {
+    public Orders(int id, String phoneReceive, String orderDate, boolean status, UserData user, String nameReceive, String addressReceive, int totalMoney) {
         this.id = id;
         this.phoneReceive = phoneReceive;
         this.orderDate = orderDate;
         this.status = status;
         this.user = user;
-        this.NameReceive = NameReceive;
-        this.AddressReceive = AddressReceive;
+        this.nameReceive = nameReceive;
+        this.addressReceive = addressReceive;
         this.totalMoney = totalMoney;
     }
 
@@ -72,20 +72,21 @@ public class Orders {
     }
 
     public String getNameReceive() {
-        return NameReceive;
+        return nameReceive;
     }
 
-    public void setNameReceive(String NameReceive) {
-        this.NameReceive = NameReceive;
+    public void setNameReceive(String nameReceive) {
+        this.nameReceive = nameReceive;
     }
 
     public String getAddressReceive() {
-        return AddressReceive;
+        return addressReceive;
     }
 
-    public void setAddressReceive(String AddressReceive) {
-        this.AddressReceive = AddressReceive;
+    public void setAddressReceive(String addressReceive) {
+        this.addressReceive = addressReceive;
     }
+
     public int getTotalMoney() {
         return totalMoney;
     }
@@ -93,5 +94,7 @@ public class Orders {
     public void setTotalMoney(int totalMoney) {
         this.totalMoney = totalMoney;
     }
+
+    
 
 }

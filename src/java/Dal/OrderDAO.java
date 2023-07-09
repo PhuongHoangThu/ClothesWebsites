@@ -7,6 +7,8 @@ package Dal;
 import Model.Cart;
 import Model.Item;
 import Model.Item2;
+import Model.OrderDetail;
+import Model.Orders;
 import Model.Size;
 import Model.UserData;
 import java.sql.PreparedStatement;
@@ -97,25 +99,91 @@ public class OrderDAO extends DBContext {
         }
     }
 
+    public Orders getOrderByOid(int oid) {
+        UserDAO user = new UserDAO();
+        String sql = "select * from Orders where id = ?";
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setInt(1, oid);
+            System.out.println(oid);
+            ResultSet rs = st.executeQuery();
+            if (rs.next()) {
+                Orders s = new Orders();
+                s.setId(rs.getInt("id"));
+                s.setPhoneReceive(rs.getString("phoneReceive"));
+                s.setOrderDate(rs.getString("orderDate"));
+                s.setStatus(rs.getBoolean("status"));
+                s.setUser(user.getAccount(rs.getInt("cid")));
+                s.setNameReceive(rs.getString("NameReceiver"));
+                s.setAddressReceive(rs.getString("AddressReceiver"));
+                s.setTotalMoney(rs.getInt("totalMoney"));
+                return s;
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return null;
+    }
+
+    public void updateOrder(int oid, boolean status) {
+        String sql = "update orders set status = ? where id = ? ";
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setBoolean(1, status);
+            st.setInt(2, oid);
+            st.executeUpdate();
+        } catch (Exception e) {
+        }
+
+    }
+
+    public List<Orders> getAllOrder() {
+        List<Orders> list = new ArrayList<>();
+        String sql = "Select * from Orders";
+        ProductDAO dao = new ProductDAO();
+        UserDAO user = new UserDAO();
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                Orders s = new Orders();
+                s.setId(rs.getInt("id"));
+                s.setPhoneReceive(rs.getString("phoneReceive"));
+                s.setOrderDate(rs.getString("orderDate"));
+                s.setStatus(rs.getBoolean("status"));
+                s.setUser(user.getAccount(rs.getInt("cid")));
+                s.setNameReceive(rs.getString("NameReceiver"));
+                s.setAddressReceive(rs.getString("AddressReceiver"));
+                s.setTotalMoney(rs.getInt("totalMoney"));
+                list.add(s);
+            }
+        } catch (Exception e) {
+        }
+        return list;
+    }
+
     public static void main(String[] args) {
         OrderDAO d = new OrderDAO();
-        ProductDAO p = new ProductDAO();
-        UserData u = new UserData(1, "Hoàng Thu Phương", "htphoangphuong12@gmail.com", "0818165923", "187 Doãn Khuê, Thái Bình, tỉnh Thái Bình", "2003-01-07", "phuonght12", "Phuong01#", 1);
-        Item t = new Item(p.getProductByid(8), 1, 10000, "S");
-        Item t1 = new Item(p.getProductByid(8), 1, 10000, "M");
-        Item t2 = new Item(p.getProductByid(8), 1, 10000, "L");
-        Item t3 = new Item(p.getProductByid(7), 1, 10000, "L");
-        Cart cart = new Cart();
-        cart.addItem(t);
-        cart.addItem(t1);
-        cart.addItem(t2);
-        cart.addItem(t3);
-        List<Item2> item2 = cart.getNumberItemByPid();
-        for(int i = 0; i<item2.size(); i++){
-            System.out.println(item2.get(i).getPid() + ": "+ item2.get(i).getTotalQuantityOfItem());
-        }
-        d.addOrder(u, cart, "0818165923", true, "Hoang Thu Phuong", "Thai Binh", 100000);
+//        ProductDAO p = new ProductDAO();
+//        UserData u = new UserData(1, "Hoàng Thu Phương", "htphoangphuong12@gmail.com", "0818165923", "187 Doãn Khuê, Thái Bình, tỉnh Thái Bình", "2003-01-07", "phuonght12", "Phuong01#", 1);
+//        Item t = new Item(p.getProductByid(8), 1, 10000, "S");
+//        Item t1 = new Item(p.getProductByid(8), 1, 10000, "M");
+//        Item t2 = new Item(p.getProductByid(8), 1, 10000, "L");
+//        Item t3 = new Item(p.getProductByid(7), 1, 10000, "L");
+//        Cart cart = new Cart();
+//        cart.addItem(t);
+//        cart.addItem(t1);
+//        cart.addItem(t2);
+//        cart.addItem(t3);
+//        List<Item2> item2 = cart.getNumberItemByPid();
+//        for(int i = 0; i<item2.size(); i++){
+//            System.out.println(item2.get(i).getPid() + ": "+ item2.get(i).getTotalQuantityOfItem());
+//        }
+//        d.addOrder(u, cart, "0818165923", true, "Hoang Thu Phuong", "Thai Binh", 100000);
 //        System.out.println(p.getProductByidAndSize(8, "S"));
+        System.out.println(d.getOrderByOid(27).isStatus());
+        d.updateOrder(27, false);
+        System.out.println(d.getOrderByOid(27).isStatus());
 
     }
 }

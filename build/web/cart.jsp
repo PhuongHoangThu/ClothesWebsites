@@ -200,7 +200,6 @@
 
                                                 </button>
                                             </div>
-
                                             <input type="text" class="form-control form-control-sm bg-secondary text-center" value="${i.quantity}" name="num">
                                             <div class="input-group-btn">
                                                 <button><a href="process?num=1&pid=${i.product.id}&size=${i.size}">+</a>

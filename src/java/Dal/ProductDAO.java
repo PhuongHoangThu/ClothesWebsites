@@ -5,6 +5,7 @@
 package Dal;
 
 import Model.Category;
+import Model.Orders;
 import Model.Product;
 import Model.Sale;
 import Model.Size;
@@ -516,6 +517,13 @@ public class ProductDAO extends DBContext {
 
     public List<Product> getListByPage(List<Product> list, int start, int end) {
         ArrayList<Product> arr = new ArrayList<>();
+        for (int i = start; i < end; i++) {
+            arr.add(list.get(i));
+        }
+        return arr;
+    }
+    public List<Orders> getListOrderByPage(List<Orders> list, int start, int end) {
+        ArrayList<Orders> arr = new ArrayList<>();
         for (int i = start; i < end; i++) {
             arr.add(list.get(i));
         }
