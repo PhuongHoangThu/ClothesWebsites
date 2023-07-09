@@ -250,7 +250,12 @@
                                     <h5 class="font-weight-bold">Total</h5>
                                     <c:set var="totalMoney" value ="0"  ></c:set>
                                     <c:forEach items="${o.items}" var="i">
-                                        <c:set var="totalMoney" value="${totalMoney + i.quantity*i.price}"></c:set>
+                                        <c:if test="${i.product.productSale ==null}">
+                                            <c:set var="totalMoney" value="${totalMoney + i.quantity*i.product.price}"></c:set>
+                                        </c:if>
+                                        <c:if test="${i.product.productSale !=null}">
+                                            <c:set var="totalMoney" value="${totalMoney + i.quantity*(i.product.price- (i.product.price*i.product.productSale.discount))}"></c:set>
+                                        </c:if>
                                     </c:forEach>
                                     <h5 class="font-weight-bold"><fmt:formatNumber pattern="###,###,###" value = "${totalMoney}" type = "number"/>VNĐ</h5>
                                 </div>
@@ -262,8 +267,6 @@
             </div>
         </div>
         <!-- Cart End -->
-
-
         <!-- Footer Start -->
         <div class="container-fluid bg-secondary text-dark mt-5 pt-5">
             <div class="row px-xl-5 pt-5">

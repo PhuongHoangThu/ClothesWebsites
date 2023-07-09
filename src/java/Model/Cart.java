@@ -32,7 +32,7 @@ public class Cart {
         this.items = items;
     }
 
-    public int getQuantityById(int id,String size) {
+    public int getQuantityById(int id, String size) {
         return getItemById(id, size).getQuantity();
     }
 
@@ -44,21 +44,37 @@ public class Cart {
         }
         return null;
     }
-    public int getNumberItemByPid(int pid) {
-        int count =0;
-        for (Item i : items) {
-            if (i.getProduct().getId() == pid) {
-                count += i.getQuantity();
+    public boolean  isExist(List<Item2> item2, int pid){
+        for(Item2 i : item2){
+            if(i.getPid()==pid){
+                return true;
             }
         }
-        return count;
+        return false;
+        
+    }
+
+    public List<Item2> getNumberItemByPid() {
+        List<Item2> listItem2 = new ArrayList<>();
+        for(int i = 0; i< items.size(); i++){
+            int quantity = 0;
+            for(int j = 0; j<items.size(); j++){
+                if(items.get(i).getProduct().getId() == items.get(j).getProduct().getId()){
+                    quantity += items.get(j).getQuantity();
+                }
+            }
+            if(!isExist(listItem2, items.get(i).getProduct().getId())){
+                listItem2.add(new Item2(items.get(i).getProduct().getId(),quantity));
+            }
+        }
+        return listItem2;
     }
 
     public void addItem(Item t) {
         int id = t.getProduct().getId();
         String size = t.getSize();
-        if (getItemById(id,size) != null) {
-            Item m = getItemById(id,size);
+        if (getItemById(id, size) != null) {
+            Item m = getItemById(id, size);
             m.setQuantity(m.getQuantity() + t.getQuantity());
         } else {
             items.add(t);
@@ -66,8 +82,8 @@ public class Cart {
     }
 
     public void removeItem(int id, String size) {
-        if (getItemById(id,size) != null) {
-            items.remove(getItemById(id,size));
+        if (getItemById(id, size) != null) {
+            items.remove(getItemById(id, size));
         }
     }
 
@@ -86,7 +102,7 @@ public class Cart {
         c.addItem(new Item(d.getProductByid(13), 2, 2, "S"));
         c.addItem(new Item(d.getProductByid(13), 2, 2, "L"));
         System.out.println(c.items.size());
-        c.removeItem(13,"S");
+        c.removeItem(13, "S");
         System.out.println(c.items.size());
     }
 

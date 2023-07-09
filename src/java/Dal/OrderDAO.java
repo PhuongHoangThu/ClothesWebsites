@@ -6,12 +6,15 @@ package Dal;
 
 import Model.Cart;
 import Model.Item;
+import Model.Item2;
 import Model.Size;
 import Model.UserData;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -74,17 +77,18 @@ public class OrderDAO extends DBContext {
                 System.out.println(i + " " + i.getSize());
             }
             ////cap nhat lai so luong san pham trong bảng product
-            String sql4 = "update product set quantity = quantity-? where pid = ?";
-            String sql5 = "update product set quantitySold = quantitySold-? where pid = ?";
+            String sql4 = "update product set quantity = quantity-? where id = ?";
+            String sql5 = "update product set quantitySold = quantitySold+? where id = ?";
             PreparedStatement st4 = connection.prepareStatement(sql4);
             PreparedStatement st5 = connection.prepareStatement(sql5);
-            for (Item i : cart.getItems()) {
-                int count = cart.getNumberItemByPid(i.getProduct().getId());
-                st4.setInt(1, count);
-                st4.setInt(2, i.getProduct().getId());
+            List<Item2> list = cart.getNumberItemByPid();
+            System.out.println(list.size());
+            for (Item2 i : list) {
+                st4.setInt(1, i.getTotalQuantityOfItem());
+                st4.setInt(2, i.getPid());
                 st4.executeUpdate();
-                st5.setInt(1, count);
-                st5.setInt(2, i.getProduct().getId());
+                st5.setInt(1, i.getTotalQuantityOfItem());
+                st5.setInt(2, i.getPid());
                 st5.executeUpdate();
             }
         } catch (SQLException e) {
@@ -100,12 +104,18 @@ public class OrderDAO extends DBContext {
         Item t = new Item(p.getProductByid(8), 1, 10000, "S");
         Item t1 = new Item(p.getProductByid(8), 1, 10000, "M");
         Item t2 = new Item(p.getProductByid(8), 1, 10000, "L");
+        Item t3 = new Item(p.getProductByid(7), 1, 10000, "L");
         Cart cart = new Cart();
         cart.addItem(t);
         cart.addItem(t1);
         cart.addItem(t2);
+        cart.addItem(t3);
+        List<Item2> item2 = cart.getNumberItemByPid();
+        for(int i = 0; i<item2.size(); i++){
+            System.out.println(item2.get(i).getPid() + ": "+ item2.get(i).getTotalQuantityOfItem());
+        }
         d.addOrder(u, cart, "0818165923", true, "Hoang Thu Phuong", "Thai Binh", 100000);
-        System.out.println(p.getProductByidAndSize(8, "S"));
+//        System.out.println(p.getProductByidAndSize(8, "S"));
 
     }
 }
