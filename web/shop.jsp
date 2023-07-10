@@ -73,7 +73,7 @@
                             <input type="text" class="form-control" name="searchName" placeholder="Tìm kiếm sản phẩm">
                             <div class="input-group-append">
                                 <span class="input-group-text bg-transparent text-primary">
-                                    <i class="fa fa-search"></i>
+                                    <button onclick="this.form.submit()"><i class="fa fa-search"></i></button> 
                                 </span>
                             </div>
                         </div>
@@ -164,36 +164,52 @@
             <div class="row px-xl-5">
                 <!-- Shop Sidebar Start -->
                 <div class="col-lg-3 col-md-12">
+                    <div class="border-bottom mb-4 pb-4">
+                        <h5 class="font-weight-semi-bold mb-4">Filter by price</h5>
+                        <c:set var="pp" value="${sessionScope.pp}"/>
+                        <c:set var="pb" value="${sessionScope.pb}"/>
+                        <form id="f2" action="home1">
+                            <input type="checkbox" id="g0" name="price" 
+                                   ${pb[0]?"checked":""}                            
+                                   value="0" onclick="setCheck1(this)"/>All<br/>
+                            <c:forEach begin="0" end="${4}"  var="i">
+                                <input type="checkbox" id="g1" name="price" 
+                                       ${pb[i+1]?"checked":""}
+                                       value="${(i+1)}" onclick="setCheck1(this)"/>${pp[i]}<br/>
+                            </c:forEach>                 
+                        </form>
+                    </div>
+
+
+
                     <!-- Price Start -->
                     <div class="border-bottom mb-4 pb-4">
-                        <h5 class="font-weight-semi-bold mb-4">Lọc sản phẩm theo giá</h5>
-                        <form>
-                            <form>
-                                <div class="custom-control custom-radio custom-control-block">
-                                    <input type="radio" class="custom-control-input" id="price" name="price" value="0" checked>
-                                    <label class="custom-control-label" for="price">Tất cả các giá</label>
-                                </div>
-                                <div class="custom-control custom-radio custom-control-block">
-                                    <input type="radio" class="custom-control-input" id="price-1" name="price" value="1">
-                                    <label class="custom-control-label" for="price-1">Dưới 100.000 VNĐ</label>
-                                </div>
-                                <div class="custom-control custom-radio custom-control-block">
-                                    <input type="radio" class="custom-control-input" id="price-2" name="price" value="2">
-                                    <label class="custom-control-label" for="price-2">100.000VNĐ - 300.000VNĐ</label>
-                                </div>
-                                <div class="custom-control custom-radio custom-control-block">
-                                    <input type="radio" class="custom-control-input" id="price-3" name="price" value="3">
-                                    <label class="custom-control-label" for="price-3">300.000VNĐ - 500.000VNĐ</label>
-                                </div>
-                                <div class="custom-control custom-radio custom-control-block">
-                                    <input type="radio" class="custom-control-input" id="price-4" name="price" value="4">
-                                    <label class="custom-control-label" for="price-4">500.000VNĐ - 1.000.000VNĐ</label>
-                                </div>
-                                <div class="custom-control custom-radio custom-control-block">
-                                    <input type="radio" class="custom-control-input" id="price-5" name="price" value="5">
-                                    <label class="custom-control-label" for="price-5">Trên 1.000.000VNĐ</label>
-                                </div>
-                            </form>
+                        <form action="" method="post" id="f">
+                            <h5 class="font-weight-semi-bold mb-4">Lọc sản phẩm theo giá</h5>
+                            <div class="custom-control custom-radio custom-control-block">
+                                <input type="radio"  class="custom-control-input" id="price" name="price" value="0" checked>
+                                <label class="custom-control-label"  for="price">Tất cả các giá</label>
+                            </div>
+                            <div class="custom-control custom-radio custom-control-block">
+                                <input type="radio"  class="custom-control-input" id="price-1" name="price" value="1">
+                                <label class="custom-control-label" for="price-1">Dưới 100.000 VNĐ</label>
+                            </div>
+                            <div class="custom-control custom-radio custom-control-block">
+                                <input type="radio"  class="custom-control-input" id="price-2" name="price" value="2">
+                                <label class="custom-control-label" for="price-2">100.000VNĐ - 300.000VNĐ</label>
+                            </div>
+                            <div class="custom-control custom-radio custom-control-block">
+                                <input type="radio"  class="custom-control-input" id="price-3" name="price" value="3">
+                                <label class="custom-control-label" for="price-3">300.000VNĐ - 500.000VNĐ</label>
+                            </div>
+                            <div class="custom-control custom-radio custom-control-block">
+                                <input type="radio" class="custom-control-input" id="price-4" name="price" value="4">
+                                <label class="custom-control-label" for="price-4">500.000VNĐ - 1.000.000VNĐ</label>
+                            </div>
+                            <div class="custom-control custom-radio custom-control-block">
+                                <input type="radio" class="custom-control-input" id="price-5" name="price" value="5">
+                                <label class="custom-control-label" for="price-5">Trên 1.000.000VNĐ</label>
+                            </div>
                         </form>
                     </div>
                     <!-- Price End -->
@@ -201,45 +217,43 @@
                     <!-- Color Start -->
                     <div class="border-bottom mb-4 pb-4">
                         <h5 class="font-weight-semi-bold mb-4">Lọc sản phẩm theo màu</h5>                        
-                        <form>
-                            <form>
-                                <div class="custom-control custom-radio custom-control-block">
-                                    <input type="radio" class="custom-control-input" id="color" name="color" value="all" checked>
-                                    <label class="custom-control-label" for="color">Tất cả các màu</label>
-                                </div>
-                                <div class="custom-control custom-radio custom-control-block">
-                                    <input type="radio" class="custom-control-input" id="color-1" name="color" value="đen">
-                                    <label class="custom-control-label" for="color-1">Đen</label>
-                                </div>
-                                <div class="custom-control custom-radio custom-control-block">
-                                    <input type="radio" class="custom-control-input" id="color-2" name="color" value="trắng">
-                                    <label class="custom-control-label" for="color-2">Trắng</label>
-                                </div>
-                                <div class="custom-control custom-radio custom-control-block">
-                                    <input type="radio" class="custom-control-input" id="color-3" name="color" value="kem">
-                                    <label class="custom-control-label" for="color-3">Kem</label>
-                                </div>
-                                <div class="custom-control custom-radio custom-control-block">
-                                    <input type="radio" class="custom-control-input" id="color-4" name="color" value="đỏ">
-                                    <label class="custom-control-label" for="color-4">Đỏ</label>
-                                </div>
-                                <div class="custom-control custom-radio custom-control-block">
-                                    <input type="radio" class="custom-control-input" id="color-5" name="color" value="xanh">
-                                    <label class="custom-control-label" for="color-5">Xanh</label>
-                                </div>
-                                <div class="custom-control custom-radio custom-control-block">
-                                    <input type="radio" class="custom-control-input" id="color-6" name="color" value="xám">
-                                    <label class="custom-control-label" for="color-6">Xám</label>
-                                </div>
-                                <div class="custom-control custom-radio custom-control-block">
-                                    <input type="radio" class="custom-control-input" id="color-7" name="color" value="vàng">
-                                    <label class="custom-control-label" for="color-7">Vàng</label>
-                                </div>
-                                <div class="custom-control custom-radio custom-control-block">
-                                    <input type="radio" class="custom-control-input" id="color-8" name="color" value="cam">
-                                    <label class="custom-control-label" for="color-8">Cam</label>
-                                </div>
-                            </form>
+                        <form action="show" method = "post">
+                            <div class="custom-control custom-radio custom-control-block">
+                                <input type="radio" class="custom-control-input" id="color" name="color" value="all" checked>
+                                <label class="custom-control-label" for="color">Tất cả các màu</label>
+                            </div>
+                            <div class="custom-control custom-radio custom-control-block">
+                                <input type="radio" class="custom-control-input" id="color-1" name="color" value="đen">
+                                <label class="custom-control-label" for="color-1">Đen</label>
+                            </div>
+                            <div class="custom-control custom-radio custom-control-block">
+                                <input type="radio" class="custom-control-input" id="color-2" name="color" value="trắng">
+                                <label class="custom-control-label" for="color-2">Trắng</label>
+                            </div>
+                            <div class="custom-control custom-radio custom-control-block">
+                                <input type="radio" class="custom-control-input" id="color-3" name="color" value="kem">
+                                <label class="custom-control-label" for="color-3">Kem</label>
+                            </div>
+                            <div class="custom-control custom-radio custom-control-block">
+                                <input type="radio" class="custom-control-input" id="color-4" name="color" value="đỏ">
+                                <label class="custom-control-label" for="color-4">Đỏ</label>
+                            </div>
+                            <div class="custom-control custom-radio custom-control-block">
+                                <input type="radio" class="custom-control-input" id="color-5" name="color" value="xanh">
+                                <label class="custom-control-label" for="color-5">Xanh</label>
+                            </div>
+                            <div class="custom-control custom-radio custom-control-block">
+                                <input type="radio" class="custom-control-input" id="color-6" name="color" value="xám">
+                                <label class="custom-control-label" for="color-6">Xám</label>
+                            </div>
+                            <div class="custom-control custom-radio custom-control-block">
+                                <input type="radio" class="custom-control-input" id="color-7" name="color" value="vàng">
+                                <label class="custom-control-label" for="color-7">Vàng</label>
+                            </div>
+                            <div class="custom-control custom-radio custom-control-block">
+                                <input type="radio" class="custom-control-input" id="color-8" name="color" value="cam">
+                                <label class="custom-control-label" for="color-8">Cam</label>
+                            </div>
                         </form>
                     </div>
                     <!-- Color End -->
@@ -247,7 +261,7 @@
                     <!-- Size Start -->
                     <div class="border-bottom mb-4 pb-4">
                         <h5 class="font-weight-semi-bold mb-4">Lọc sản phẩm theo chất liệu</h5>
-                        <form>
+                        <form action="shop" method="post">
                             <div class="custom-control custom-radio custom-control-block">
                                 <input type="radio" class="custom-control-input" id="size" name="material" value ="all" checked>
                                 <label class="custom-control-label" for="size">Tất cả các chất liệu</label>
@@ -289,7 +303,6 @@
                                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="triggerId">
                                         <a class="dropdown-item" href="#">Mới nhất</a>
                                         <a class="dropdown-item" href="#">Bán chạy nhất</a>
-                                        <a class="dropdown-item" href="#">Đánh giá cao nhất</a>
                                     </div>
                                 </div>
                             </div>
@@ -422,7 +435,25 @@
             <!-- Back to Top -->
             <a href="#" class="btn btn-primary back-to-top"><i class="fa fa-angle-double-up"></i></a>
 
+            <script type="text/javascript">
+                function setCheck1(obj){
+                var fries = document.getElementsByName('price');
+                if ((obj.id=='g0') && (fries[0].checked==true))
+                {
+                    for (var i = 1; i < fries.length; i++)
+                        fries[i].checked = false;
+                } else{
+                    for (var i = 1; i < fries.length; i++) {
+                        if (fries[i].checked==true) {
+                            fries[0].checked=false;
+                            break;
+                        }
+                    }
+                }
+                document.getElementById('f2').submit();
+            }
 
+            </script>
             <!-- JavaScript Libraries -->
             <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
             <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>

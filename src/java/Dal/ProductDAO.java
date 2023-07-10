@@ -185,6 +185,136 @@ public class ProductDAO extends DBContext {
 
     }
 
+    public List<Product> getAllProductsByCategoryID(int cid, String key, int price, String color, String material) {
+        String sql = "select * from Product";
+        List<Product> list = new ArrayList<>();
+        if (cid != 0) {
+            sql += " where cid = " + cid;
+        }
+        if (key != "") {
+            sql += " and ProductName like N'%" + key + "%'";
+        }
+        if (color != "") {
+            sql += " and Color = N'" + color + "'";
+        }
+        if (material != "") {
+            sql += " and Material = N'" + material + "'";
+        }
+
+        if (price != 0) {
+            switch (price) {
+                case 1: {
+                    sql += " and price <= 100000 ";
+                    break;
+                }
+                case 2: {
+                    sql += " and price between 100000 and 300000";
+                    break;
+                }
+                case 3: {
+                    sql += " and price between 300000 and 500000 ";
+                    break;
+                }
+                case 4: {
+                    sql += " and price between 500000 and 1000000 ";
+                    break;
+                }
+                case 5: {
+                    sql += " and price >= 1000000 ";
+                    break;
+                }
+
+            }
+        }
+        System.out.println(sql);
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                Product e = new Product();
+                e.setId(rs.getInt("id"));
+                e.setName(rs.getString("ProductName"));
+                e.setPrice(rs.getInt("Price"));
+                e.setImage(rs.getString("image"));
+                e.setDescription(rs.getString("Description"));
+                e.setCreateDate(rs.getString("CreateDate"));
+                e.setUpdateDate(rs.getString("UpdateDate"));
+                e.setCategory(getCategoryById(rs.getInt("cid")));
+                e.setQuantity(rs.getInt("quantity"));
+                e.setColor(rs.getString("Color"));
+                e.setMaterial(rs.getString("Material"));
+                e.setPriceOriginal(rs.getInt("OriginalPrice"));
+                e.setQuantitySold(rs.getInt("QuantitySold"));
+                list.add(e);
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return list;
+    }
+
+    public List<Product> searchByKey(String key) {
+        String sql = "select * from Product";
+        List<Product> list = new ArrayList<>();
+        if (key != "") {
+            sql += " where ProductName like N'%" + key + "%'";
+        }
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                Product e = new Product();
+                e.setId(rs.getInt("id"));
+                e.setName(rs.getString("ProductName"));
+                e.setPrice(rs.getInt("Price"));
+                e.setImage(rs.getString("image"));
+                e.setDescription(rs.getString("Description"));
+                e.setCreateDate(rs.getString("CreateDate"));
+                e.setUpdateDate(rs.getString("UpdateDate"));
+                e.setCategory(getCategoryById(rs.getInt("cid")));
+                e.setQuantity(rs.getInt("quantity"));
+                e.setColor(rs.getString("Color"));
+                e.setMaterial(rs.getString("Material"));
+                e.setPriceOriginal(rs.getInt("OriginalPrice"));
+                e.setQuantitySold(rs.getInt("QuantitySold"));
+                list.add(e);
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return list;
+    }
+    public List<Product> getProductsByPrice(int from, int to) {
+        String sql = "select * from Product where price between ? and ?";
+        List<Product> list = new ArrayList<>();
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setInt(1, from);
+            st.setInt(2, to);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                Product e = new Product();
+                e.setId(rs.getInt("id"));
+                e.setName(rs.getString("ProductName"));
+                e.setPrice(rs.getInt("Price"));
+                e.setImage(rs.getString("image"));
+                e.setDescription(rs.getString("Description"));
+                e.setCreateDate(rs.getString("CreateDate"));
+                e.setUpdateDate(rs.getString("UpdateDate"));
+                e.setCategory(getCategoryById(rs.getInt("cid")));
+                e.setQuantity(rs.getInt("quantity"));
+                e.setColor(rs.getString("Color"));
+                e.setMaterial(rs.getString("Material"));
+                e.setPriceOriginal(rs.getInt("OriginalPrice"));
+                e.setQuantitySold(rs.getInt("QuantitySold"));
+                list.add(e);
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return list;
+    }
+
     public List<Product> getAllProductsByCategoryID(int cid) {
         String sql = "select * from Product";
         List<Product> list = new ArrayList<>();
@@ -350,79 +480,87 @@ public class ProductDAO extends DBContext {
         return null;
     }
 
-    public List<Product> getProductByKey(String searchName, int price, String color, String material) {
-        String sql = "select  * from Product where 1=1";
-        List<Product> list = new ArrayList<>();
-        if (searchName != "") {
-            sql += " and ProductName like N'%" + searchName + "%'";
-        }
-        //price
-        if (price == 1) {
-            sql += " and price <= 100000 ";
-        } else if (price == 2) {
-            sql += " and price between 100000 and 300000 ";
-        } else if (price == 3) {
-            sql += " and price between 300000 and 500000 ";
-        } else if (price == 4) {
-            sql += " and price between 500000 and 1000000 ";
-        } else if (price == 5) {
-            sql += " and price >= 1000000 ";
-        }
-        //color
-        if (color.equalsIgnoreCase("đen")) {
-            sql += " and color = N'đen' ";
-        } else if (color.equalsIgnoreCase("trắng")) {
-            sql += " and color = N'trắng' ";
-        } else if (color.equalsIgnoreCase("kem")) {
-            sql += " and color = N'kem' ";
-        } else if (color.equalsIgnoreCase("đỏ")) {
-            sql += " and color = N'đỏ' ";
-        } else if (color.equalsIgnoreCase("xanh")) {
-            sql += " and color = N'xanh' ";
-        } else if (color.equalsIgnoreCase("xám")) {
-            sql += " and color = N'xám' ";
-        } else if (color.equalsIgnoreCase("vàng")) {
-            sql += " and color = N'vàng' ";
-        } else if (color.equalsIgnoreCase("cam")) {
-            sql += " and color = N'cam' ";
-        }
-        // material
-
-        if (material.equalsIgnoreCase("đũi")) {
-            sql += " and material = N'đũi' ";
-        } else if (material.equalsIgnoreCase("cotton")) {
-            sql += " and material = N'cotton' ";
-        } else if (material.equalsIgnoreCase("len")) {
-            sql += " and material = N'len' ";
-        } else if (material.equalsIgnoreCase("Polyeste")) {
-            sql += " and material = N'Polyeste' ";
-        }
-        System.out.println(sql);
-        try {
-            PreparedStatement st = connection.prepareStatement(sql);
-            ResultSet rs = st.executeQuery();
-            while (rs.next()) {
-                Product e = new Product();
-                e.setId(rs.getInt("id"));
-                e.setName(rs.getString("ProductName"));
-                e.setPrice(rs.getInt("Price"));
-                e.setImage(rs.getString("image"));
-                e.setDescription(rs.getString("Description"));
-                e.setCreateDate(rs.getString("CreateDate"));
-                e.setUpdateDate(rs.getString("UpdateDate"));
-                e.setCategory(getCategoryById(rs.getInt("cid")));
-                e.setQuantity(rs.getInt("quantity"));
-                e.setColor(rs.getString("Color"));
-                e.setMaterial(rs.getString("Material"));
-                e.setPriceOriginal(rs.getInt("OriginalPrice"));
-                e.setQuantitySold(rs.getInt("QuantitySold"));
-                list.add(e);
-            }
-        } catch (Exception e) {
-            System.out.println(e);
-        }
-        return list;
-    }
+    /**
+     *
+     * @param searchName
+     * @param price
+     * @param color
+     * @param material
+     * @return
+     */
+//    public public List<Product> getProductByKey(String searchName, int price, String color, String material) {
+//        String sql = "select  * from Product where 1=1";
+//        List<Product> list = new ArrayList<>();
+//        if (searchName != "") {
+//            sql += " and ProductName like N'%" + searchName + "%'";
+//        }
+//        //price
+//        if (price == 1) {
+//            sql += " and price <= 100000 ";
+//        } else if (price == 2) {
+//            sql += " and price between 100000 and 300000 ";
+//        } else if (price == 3) {
+//            sql += " and price between 300000 and 500000 ";
+//        } else if (price == 4) {
+//            sql += " and price between 500000 and 1000000 ";
+//        } else if (price == 5) {
+//            sql += " and price >= 1000000 ";
+//        }
+//        //color
+//        if (color.equalsIgnoreCase("đen")) {
+//            sql += " and color = N'đen' ";
+//        } else if (color.equalsIgnoreCase("trắng")) {
+//            sql += " and color = N'trắng' ";
+//        } else if (color.equalsIgnoreCase("kem")) {
+//            sql += " and color = N'kem' ";
+//        } else if (color.equalsIgnoreCase("đỏ")) {
+//            sql += " and color = N'đỏ' ";
+//        } else if (color.equalsIgnoreCase("xanh")) {
+//            sql += " and color = N'xanh' ";
+//        } else if (color.equalsIgnoreCase("xám")) {
+//            sql += " and color = N'xám' ";
+//        } else if (color.equalsIgnoreCase("vàng")) {
+//            sql += " and color = N'vàng' ";
+//        } else if (color.equalsIgnoreCase("cam")) {
+//            sql += " and color = N'cam' ";
+//        }
+//        // material
+//
+//        if (material.equalsIgnoreCase("đũi")) {
+//            sql += " and material = N'đũi' ";
+//        } else if (material.equalsIgnoreCase("cotton")) {
+//            sql += " and material = N'cotton' ";
+//        } else if (material.equalsIgnoreCase("len")) {
+//            sql += " and material = N'len' ";
+//        } else if (material.equalsIgnoreCase("Polyeste")) {
+//            sql += " and material = N'Polyeste' ";
+//        }
+//        System.out.println(sql);
+//        try {
+//            PreparedStatement st = connection.prepareStatement(sql);
+//            ResultSet rs = st.executeQuery();
+//            while (rs.next()) {
+//                Product e = new Product();
+//                e.setId(rs.getInt("id"));
+//                e.setName(rs.getString("ProductName"));
+//                e.setPrice(rs.getInt("Price"));
+//                e.setImage(rs.getString("image"));
+//                e.setDescription(rs.getString("Description"));
+//                e.setCreateDate(rs.getString("CreateDate"));
+//                e.setUpdateDate(rs.getString("UpdateDate"));
+//                e.setCategory(getCategoryById(rs.getInt("cid")));
+//                e.setQuantity(rs.getInt("quantity"));
+//                e.setColor(rs.getString("Color"));
+//                e.setMaterial(rs.getString("Material"));
+//                e.setPriceOriginal(rs.getInt("OriginalPrice"));
+//                e.setQuantitySold(rs.getInt("QuantitySold"));
+//                list.add(e);
+//            }
+//        } catch (Exception e) {
+//            System.out.println(e);
+//        }
+//        return list;
+//    }
 
     public List<Sale> getSaleProduct() {
         String sql = "select s.[id]as sid,p.id as pid,discount,startdate,finishdate,ProductName,Price,image,[Description],[CreateDate],[UpdateDate],[cid],[quantity],[Color],[Material],OriginalPrice,QuantitySold\n"
@@ -522,6 +660,7 @@ public class ProductDAO extends DBContext {
         }
         return arr;
     }
+
     public List<Orders> getListOrderByPage(List<Orders> list, int start, int end) {
         ArrayList<Orders> arr = new ArrayList<>();
         for (int i = start; i < end; i++) {
@@ -573,7 +712,11 @@ public class ProductDAO extends DBContext {
 //        System.out.println("trước : " + list.size());
 //        list.removeAll(list);
 //        System.out.println("sau : " + list.size());
-
+        ProductDAO d = new ProductDAO();
+        System.out.println(d.getAllProductsByCategoryID(13, "váy dài", 3, "Trắng", "Đũi").size());
+        System.out.println(d.getAllProductsByCategoryID(13, "", 0, "", "").size());
+//        d.getAllProductsByCategoryID(13, "váy dài", 2, "Trắng", "Đũi");
+//        d.getAllProductsByCategoryID(13,"" ,0, "", "");
     }
 
 }

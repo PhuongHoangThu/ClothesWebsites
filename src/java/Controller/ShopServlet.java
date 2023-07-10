@@ -15,6 +15,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -63,10 +64,75 @@ public class ShopServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         //processRequest(request, response);
+        PrintWriter out = response.getWriter();
         HttpSession session = request.getSession();
         String cid_raw = request.getParameter("cid");
+        String[] pp = {"Dưới 200.000VNĐ",
+            "Từ 200.000VNĐ - 500.000VNĐ",
+            "Từ 500.000VNĐ - 700.000VNĐ",
+            "Từ Từ 700.000VNĐ - 1.000.000VNĐ",
+            "Trên 1.000.000đ"};
+        boolean[] pb = new boolean[pp.length + 1];
+        pb[0] = true;
         ProductDAO d = new ProductDAO();
         int cid;
+
+        try {
+            cid = Integer.parseInt(cid_raw);
+            List<Product> listProduct = d.getAllProductsByCategoryID(cid);
+            int pageProduct, numperpage = 12;
+            int sizeProduct = listProduct.size();
+            int numProduct = (sizeProduct % numperpage == 0 ? (sizeProduct / numperpage) : (sizeProduct / numperpage + 1));
+            String xpageProduct = request.getParameter("pageProduct");
+            if (xpageProduct == null) {
+                pageProduct = 1;
+            } else {
+                pageProduct = Integer.parseInt(xpageProduct);
+            }
+            int startProduct, endProduct;
+            startProduct = (pageProduct - 1) * numperpage;
+            endProduct = Math.min(pageProduct * numperpage, sizeProduct);
+            List<Product> listSubProduct = d.getListByPage(listProduct, startProduct, endProduct);
+            session.setAttribute("cid", cid);
+            session.setAttribute("pp", pp);
+            session.setAttribute("pb", pb);
+            session.setAttribute("pageProduct", pageProduct);
+            session.setAttribute("numProduct", numProduct);
+            session.setAttribute("listSubProduct", listSubProduct);
+
+        } catch (Exception e) {
+        }
+        List<Category> listCate = (List<Category>) session.getAttribute("listCate");
+        request.setAttribute("listCate", listCate);
+        request.getRequestDispatcher("shop.jsp").forward(request, response);
+
+    }
+
+    /**
+     * Handles the HTTP <code>POST</code> method.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        //processRequest(request, response);
+        PrintWriter out = response.getWriter();
+        HttpSession session = request.getSession();
+        String cid_raw = request.getParameter("cid");
+        String[] pp = {"Dưới 200.000VNĐ",
+            "Từ 200.000VNĐ - 500.000VNĐ",
+            "Từ 500.000VNĐ - 700.000VNĐ",
+            "Từ Từ 700.000VNĐ - 1.000.000VNĐ",
+            "Trên 1.000.000đ"};
+        boolean[] pb = new boolean[pp.length + 1];
+        pb[0] = true;
+        ProductDAO d = new ProductDAO();
+        int cid;
+
         try {
             cid = Integer.parseInt(cid_raw);
             List<Product> listProduct = d.getAllProductsByCategoryID(cid);
@@ -93,21 +159,6 @@ public class ShopServlet extends HttpServlet {
         List<Category> listCate = (List<Category>) session.getAttribute("listCate");
         request.setAttribute("listCate", listCate);
         request.getRequestDispatcher("shop.jsp").forward(request, response);
-
-    }
-
-    /**
-     * Handles the HTTP <code>POST</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        processRequest(request, response);
     }
 
     /**

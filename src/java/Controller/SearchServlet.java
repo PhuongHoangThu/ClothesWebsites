@@ -66,7 +66,7 @@ public class SearchServlet extends HttpServlet {
 
         // getList
         ProductDAO dao = new ProductDAO();
-        List<Product> list = dao.getProductByKey(searchName,0 ,"" , "");
+        List<Product> list = dao.searchByKey(searchName);
         HttpSession session = request.getSession();
         //Pagination
         int pageSearch, numperpage = 12;
@@ -103,39 +103,39 @@ public class SearchServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         //processRequest(request, response);
-        String searchName = request.getParameter("searchName");
-        String price_raw = request.getParameter("price");
-        String color = request.getParameter("color");
-        String material = request.getParameter("material");
-        // getList
-        int price;
-        ProductDAO dao = new ProductDAO();
-        try {
-            price = Integer.parseInt(price_raw);
-            List<Product> list = dao.getProductByKey(searchName, price, color, material);
-            HttpSession session = request.getSession();
-            //Pagination
-            int pageSearch, numperpage = 12;
-            int sizeSearch = list.size();
-            int numSearch = (sizeSearch % numperpage == 0 ? (sizeSearch / numperpage) : (sizeSearch / numperpage + 1));
-            String xpageSearch = request.getParameter("pageSearch");
-            if (xpageSearch == null) {
-                pageSearch = 1;
-            } else {
-                pageSearch = Integer.parseInt(xpageSearch);
-            }
-            int startSearch, endSearch;
-            startSearch = (pageSearch - 1) * numperpage;
-            endSearch = Math.min(pageSearch * numperpage, sizeSearch);
-            List<Product> listSubSearch = dao.getListByPage(list, startSearch, endSearch);
-            session.setAttribute("listAll", list);
-            session.setAttribute("searchName", searchName);
-            session.setAttribute("pageProduct", pageSearch);
-            session.setAttribute("numSearch", numSearch);
-            session.setAttribute("listSearch", listSubSearch);
-            request.getRequestDispatcher("search.jsp").forward(request, response);
-        } catch (Exception e) {
-        }
+//        String searchName = request.getParameter("searchName");
+//        String price_raw = request.getParameter("price");
+//        String color = request.getParameter("color");
+//        String material = request.getParameter("material");
+//        // getList
+//        int price;
+//        ProductDAO dao = new ProductDAO();
+//        try {
+//            price = Integer.parseInt(price_raw);
+//            List<Product> list = dao.getProductByKey(searchName, price, color, material);
+//            HttpSession session = request.getSession();
+//            //Pagination
+//            int pageSearch, numperpage = 12;
+//            int sizeSearch = list.size();
+//            int numSearch = (sizeSearch % numperpage == 0 ? (sizeSearch / numperpage) : (sizeSearch / numperpage + 1));
+//            String xpageSearch = request.getParameter("pageSearch");
+//            if (xpageSearch == null) {
+//                pageSearch = 1;
+//            } else {
+//                pageSearch = Integer.parseInt(xpageSearch);
+//            }
+//            int startSearch, endSearch;
+//            startSearch = (pageSearch - 1) * numperpage;
+//            endSearch = Math.min(pageSearch * numperpage, sizeSearch);
+//            List<Product> listSubSearch = dao.getListByPage(list, startSearch, endSearch);
+//            session.setAttribute("listAll", list);
+//            session.setAttribute("searchName", searchName);
+//            session.setAttribute("pageProduct", pageSearch);
+//            session.setAttribute("numSearch", numSearch);
+//            session.setAttribute("listSearch", listSubSearch);
+//            request.getRequestDispatcher("search.jsp").forward(request, response);
+//        } catch (Exception e) {
+//        }
     }
 
     /**
