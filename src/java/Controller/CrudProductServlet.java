@@ -65,23 +65,8 @@ public class CrudProductServlet extends HttpServlet {
         HttpSession session = request.getSession();
         ProductDAO p = new ProductDAO();
         List<Product> listAd = p.getAllProducts();
-        int pageAd, numperpage = 12;
-        int sizeAd = listAd.size();
-        int numAd = (sizeAd % numperpage == 0 ? (sizeAd / numperpage) : (sizeAd / numperpage + 1));
-        String xpageAd = request.getParameter("pageAd");
-        if (xpageAd == null) {
-            pageAd = 1;
-        } else {
-            pageAd = Integer.parseInt(xpageAd);
-        }
-        int start, end;
-        start = (pageAd - 1) * numperpage;
-        end = Math.min(pageAd * numperpage, sizeAd);
-        List<Product> listSubAd = p.getListByPage(listAd, start, end);
-        session.setAttribute("listAd", listSubAd);
-        request.setAttribute("pageAd", pageAd);
-        request.setAttribute("numAd", numAd);
-        request.getRequestDispatcher("crudProduct.jsp").forward(request, response);
+        session.setAttribute("listAd", listAd);
+        request.getRequestDispatcher("crudProductDashboard.jsp").forward(request, response);
 
     }
 

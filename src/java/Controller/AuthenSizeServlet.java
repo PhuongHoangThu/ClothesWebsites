@@ -22,8 +22,8 @@ import java.util.List;
  *
  * @author HP
  */
-@WebServlet(name = "AuthenServlet", urlPatterns = {"/authenAd"})
-public class AuthenServletAd extends HttpServlet {
+@WebServlet(name = "AuthenSizeServlet", urlPatterns = {"/authenSize"})
+public class AuthenSizeServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -42,10 +42,10 @@ public class AuthenServletAd extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet AuthenServlet</title>");
+            out.println("<title>Servlet AuthenSizeServlet</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet AuthenServlet at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet AuthenSizeServlet at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -70,32 +70,16 @@ public class AuthenServletAd extends HttpServlet {
         UserData account = (UserData) session.getAttribute("account");
         if (account == null || account.getRole() != 2) {
             response.sendRedirect("login");
-        } else if (action.equals("add")) {
-            response.sendRedirect("addProductAd.jsp");
         } else if (action.equals("update")) {
             String id_raw = request.getParameter("pid");
             int id;
             ProductDAO cdb = new ProductDAO();
             try {
                 id = Integer.parseInt(id_raw);
-                Product c = cdb.getProductByid(id);
                 List<Size> listSize = cdb.getSizeByPid(id);
                 request.setAttribute("listSize", listSize);
-                request.setAttribute("productUpdate", c);
-                request.getRequestDispatcher("updateProductAd.jsp").forward(request, response);
+                request.getRequestDispatcher("crudProduct.jsp").forward(request, response);
             } catch (Exception e) {
-            }
-
-        } else if (action.equals("delete")) {
-            String pid_raw = request.getParameter("pid");
-            int pid;
-            try {
-                pid = Integer.parseInt(pid_raw);
-                ProductDAO cdb = new ProductDAO();
-                cdb.deleteteCategoryByID(pid);
-                response.sendRedirect("crudproduct");
-            } catch (Exception e) {
-                out.println(e);
             }
         }
     }

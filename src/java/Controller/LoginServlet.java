@@ -109,7 +109,7 @@ public class LoginServlet extends HttpServlet {
             if (a.getRole() == 1) {
                 response.sendRedirect("home");
             } else if (a.getRole() == 2) {
-                response.sendRedirect("crudproduct");
+                response.sendRedirect("dashboard.jsp");
             }
         }
 

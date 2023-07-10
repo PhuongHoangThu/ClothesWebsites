@@ -150,6 +150,19 @@ public class ProductDAO extends DBContext {
 
     public void deleteteCategoryByID(int pid) {
         try {
+            // xóa size trong orderdetail
+            String sql0 = "Select * from Size where pid =? ";
+            PreparedStatement st0 = connection.prepareStatement(sql0);
+            st0.setInt(1, pid);
+            ResultSet rs = st0.executeQuery();
+            while (rs.next()) {
+                String sql01 = "DELETE FROM [dbo].[OrderDetail]\n"
+                        + "      WHERE sid = ?";
+                PreparedStatement st01 = connection.prepareStatement(sql01);
+                st01.setInt(1, rs.getInt("sid"));
+                st01.executeUpdate();
+            }
+
             // xóa sản phẩm có d = ? ở trong bảng size
             String sql = "DELETE FROM [dbo].[Size]\n"
                     + "      WHERE pid=?";
@@ -160,20 +173,20 @@ public class ProductDAO extends DBContext {
             String sql1 = "DELETE FROM [dbo].[Sale]\n"
                     + "      WHERE pid=?";
             PreparedStatement st1 = connection.prepareStatement(sql1);
-            st.setInt(1, pid);
-            st.executeUpdate();
+            st1.setInt(1, pid);
+            st1.executeUpdate();
             //xóa sản phẩm trong bảng OrderDetail
             String sql2 = "DELETE FROM [dbo].[OrderDetail]\n"
                     + "      WHERE pid=?";
             PreparedStatement st2 = connection.prepareStatement(sql2);
-            st.setInt(1, pid);
-            st.executeUpdate();
+            st2.setInt(1, pid);
+            st2.executeUpdate();
             // xóa sản phẩm trong bảng Feedback
             String sql3 = "DELETE FROM [dbo].[Feedback]\n"
                     + "      WHERE pid=?";
             PreparedStatement st3 = connection.prepareStatement(sql3);
-            st.setInt(1, pid);
-            st.executeUpdate();
+            st3.setInt(1, pid);
+            st3.executeUpdate();
             // Xóa trong bảng product
             String sql4 = "delete from Product where id=?";
             PreparedStatement st4 = connection.prepareStatement(sql4);
@@ -284,6 +297,7 @@ public class ProductDAO extends DBContext {
         }
         return list;
     }
+
     public List<Product> getProductsByPrice(int from, int to) {
         String sql = "select * from Product where price between ? and ?";
         List<Product> list = new ArrayList<>();
@@ -561,7 +575,6 @@ public class ProductDAO extends DBContext {
 //        }
 //        return list;
 //    }
-
     public List<Sale> getSaleProduct() {
         String sql = "select s.[id]as sid,p.id as pid,discount,startdate,finishdate,ProductName,Price,image,[Description],[CreateDate],[UpdateDate],[cid],[quantity],[Color],[Material],OriginalPrice,QuantitySold\n"
                 + "from Sale s inner join Product p on p.id = s.pid \n"

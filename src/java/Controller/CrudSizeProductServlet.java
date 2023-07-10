@@ -23,7 +23,7 @@ import java.util.List;
  * @author HP
  */
 @WebServlet(name = "CrudProductDetailServlet", urlPatterns = {"/detailProductAd"})
-public class CrudProductDetailServlet extends HttpServlet {
+public class CrudSizeProductServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -77,7 +77,7 @@ public class CrudProductDetailServlet extends HttpServlet {
             session.setAttribute("productDetail", list);
         } catch (Exception e) {
         }
-        request.getRequestDispatcher("crudProductDetail.jsp").forward(request, response);
+        request.getRequestDispatcher("crudSizeDashboard.jsp").forward(request, response);
 
     }
 

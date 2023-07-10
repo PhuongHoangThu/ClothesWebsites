@@ -1,15 +1,13 @@
 ﻿<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-      <meta charset="utf-8" />
+    <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Free Bootstrap Admin Template : Dream</title>
+    <title>Free Bootstrap HTML5 Admin Template : Master</title>
 	<!-- Bootstrap Styles-->
     <link href="assets/css/bootstrap.css" rel="stylesheet" />
      <!-- FontAwesome Styles-->
     <link href="assets/css/font-awesome.css" rel="stylesheet" />
-     <!-- Morris Chart Styles-->
-    <link href="assets/js/morris/morris-0.4.3.min.css" rel="stylesheet" />
         <!-- Custom Styles-->
     <link href="assets/css/custom-styles.css" rel="stylesheet" />
      <!-- Google Fonts-->
@@ -25,7 +23,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="index.html"><i class="fa fa-comments"></i> <strong>MASTER </strong></a>
+                <a class="navbar-brand" href="dashboard.jsp"><i class="fa fa-comments"></i> <strong>MASTER </strong></a>
             </div>
 
             <ul class="nav navbar-top-links navbar-right">
@@ -243,23 +241,23 @@
                 <ul class="nav" id="main-menu">
 
                     <li>
-                        <a href="index.html"><i class="fa fa-dashboard"></i> Dashboard</a>
+                        <a href="dashboard.jsp"><i class="fa fa-dashboard"></i> Dashboard</a>
                     </li>
                     <li>
-                        <a href="ui-elements.html"><i class="fa fa-desktop"></i> UI Elements</a>
+                        <a href="ui-elements.jsp"><i class="fa fa-desktop"></i> UI Elements</a>
                     </li>
 					<li>
-                        <a href="chart.html" class="active-menu"><i class="fa fa-bar-chart-o"></i> Charts</a>
+                        <a href="chart.jsp"><i class="fa fa-bar-chart-o"></i> Charts</a>
                     </li>
                     <li>
-                        <a href="tab-panel.html"><i class="fa fa-qrcode"></i> Tabs & Panels</a>
+                        <a href="tab-panel.jsp"><i class="fa fa-qrcode"></i> Tabs & Panels</a>
                     </li>
                     
                     <li>
-                        <a href="table.html"><i class="fa fa-table"></i> Responsive Tables</a>
+                        <a href="table.jsp"><i class="fa fa-table"></i> Responsive Tables</a>
                     </li>
                     <li>
-                        <a href="form.html"><i class="fa fa-edit"></i> Forms </a>
+                        <a href="form.jsp"><i class="fa fa-edit"></i> Forms </a>
                     </li>
 
 
@@ -291,7 +289,7 @@
                         </ul>
                     </li>
                     <li>
-                        <a href="empty.html"><i class="fa fa-fw fa-file"></i> Empty Page</a>
+                        <a class="active-menu" href="empty.jsp"><i class="fa fa-fw fa-file"></i> Empty Page</a>
                     </li>
                 </ul>
 
@@ -304,62 +302,10 @@
 			 <div class="row">
                     <div class="col-md-12">
                         <h1 class="page-header">
-                            Charts <small>Show up your stats</small>
+                            Empty Page <small>Create new page.</small>
                         </h1>
                     </div>
                 </div> 
-                 <!-- /. ROW  -->
-             
-                <div class="row"> 
-                    
-                      
-                               <div class="col-md-6 col-sm-12 col-xs-12">                     
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            Bar Chart
-                        </div>
-                        <div class="panel-body">
-                            <div id="morris-bar-chart"></div>
-                        </div>
-                    </div>            
-                </div>
-                      <div class="col-md-6 col-sm-12 col-xs-12">                     
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            Area Chart
-                        </div>
-                        <div class="panel-body">
-                            <div id="morris-area-chart"></div>
-                        </div>
-                    </div>            
-                </div> 
-                
-           </div>
-                 <!-- /. ROW  -->
-                <div class="row">                     
-                      
-                               <div class="col-md-6 col-sm-12 col-xs-12">                     
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            Line Chart
-                        </div>
-                        <div class="panel-body">
-                            <div id="morris-line-chart"></div>
-                        </div>
-                    </div>            
-                </div>
-                      <div class="col-md-6 col-sm-12 col-xs-12">                     
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            Donut Chart
-                        </div>
-                        <div class="panel-body">                            
-							<div id="morris-donut-chart"></div>
-                        </div>
-                    </div>            
-                </div> 
-                
-           </div>
                  <!-- /. ROW  -->
 				 <footer><p>All right reserved. Template by: <a href="http://webthemez.com">WebThemez</a></p></footer>
 				</div>
@@ -375,9 +321,6 @@
     <script src="assets/js/bootstrap.min.js"></script>
     <!-- Metis Menu Js -->
     <script src="assets/js/jquery.metisMenu.js"></script>
-     <!-- Morris Chart Js -->
-     <script src="assets/js/morris/raphael-2.1.0.min.js"></script>
-    <script src="assets/js/morris/morris.js"></script>
       <!-- Custom Js -->
     <script src="assets/js/custom-scripts.js"></script>
     

@@ -16,6 +16,7 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
         <link rel="stylesheet" href="css/styleAdminHome"/>
+        <script src="https://kit.fontawesome.com/47f71e79b1.js" crossorigin="anonymous"></script>
     <body>
 
         <div class="container">
@@ -57,8 +58,8 @@
                                 <td>${listProduct.updateDate}</td>
                                 <td>${listProduct.quantity}</td>
                                 <td>
-                                    <a href="authenAd?action=update&pid=${listProduct.id}" class="edit" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
-                                    <a href="#" onclick="doDelete('${listProduct.id}')" class="delete" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
+                                    <a href="authenAd?action=update&pid=${listProduct.id}" ><i class="fa-solid fa-pen-to-square"></i></a>
+                                    <a href="#" onclick="doDelete('${listProduct.id}')" ><i class="fa-solid fa-trash"></i></a>
                                 </td>
                             </tr>
                         </c:forEach>
