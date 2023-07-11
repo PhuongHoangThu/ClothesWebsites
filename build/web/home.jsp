@@ -82,10 +82,23 @@
                 </div>
                 <div class="col-lg-3 col-6 text-right">
                     <c:if test = "${sessionScope.account != null}">
-                        <a href="profile" class="btn border">
-                            <i class="fa-regular fa-user"></i>
-                            <span class="badge">Hồ sơ</span>
-                        </a>
+                        <c:if test="${sessionScope.account.role == 2}">
+                            <a href="dashboard.jsp" class="btn border">
+                                <i class="fa-solid fa-chart-pie"></i>
+                                <span class="badge">Dashboard</span>
+                            </a>
+                            <a href="profile" class="btn border">
+                                <i class="fa-regular fa-user"></i>
+                                <span class="badge">Hồ sơ</span>
+                            </a>
+                        </c:if>
+                        <c:if test="${sessionScope.account.role == 1}">
+                            <a href="profile" class="btn border">
+                                <i class="fa-regular fa-user"></i>
+                                <span class="badge">Hồ sơ</span>
+                            </a>
+                        </c:if>
+
                     </c:if>
                     <c:if test = "${sessionScope.account == null}">
                         <a href="login" class="btn border">

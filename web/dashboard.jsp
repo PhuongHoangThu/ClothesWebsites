@@ -249,7 +249,25 @@
                             <a class="active-menu" href="dashboard.jsp"><i class="fa fa-dashboard"></i> Dashboard</a>
                         </li>
                         <li>
-                            <a href="ui-elements.jsp"><i class="fa fa-desktop"></i> UI Elements</a>
+                            <a href="#"><i class="fa fa-sitemap"></i> Quản lý trang <span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level">
+                                <li>
+                                    <a href="crudproduct">Sản phẩm</a>
+                                    <a href="authenAd?action=add">Thêm sản phẩm</a>
+                                </li>
+                                <li>
+                                    <a href="listuser">Người dùng</a>
+                                </li>
+                                <li>
+                                    <a href="feedback">Feedback</a>
+                                </li>
+                                <li>
+                                    <a href="list">Đơn hàng</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="home"><i class="fa fa-desktop"></i> Giao diện người dùng</a>
                         </li>
                         <li>
                             <a href="chart.jsp"><i class="fa fa-bar-chart-o"></i> Charts</a>
@@ -263,28 +281,6 @@
                         </li>
                         <li>
                             <a href="form.jsp"><i class="fa fa-edit"></i> Forms </a>
-                        </li>
-
-
-                        <li>
-                            <a href="#"><i class="fa fa-sitemap"></i> Quản lý trang <span class="fa arrow"></span></a>
-                            <ul class="nav nav-second-level">
-                                <li>
-                                    <a href="crudproduct">Sản phẩm</a>
-                                </li>
-                                <li>
-                                    <a href="listuser">Người dùng</a>
-                                </li>
-                                <li>
-                                    <a href="#">Feedback</a>
-                                </li>
-                                <li>
-                                    <a href="list">Đơn hàng</a>
-                                </li>
-                            </ul>
-                        </li>
-                        <li>
-                            <a href="empty.jsp"><i class="fa fa-fw fa-file"></i> Empty Page</a>
                         </li>
                     </ul>
 
