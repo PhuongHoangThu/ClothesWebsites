@@ -5,8 +5,8 @@
 
 package Controller;
 
+import Dal.OrderDAO;
 import Dal.UserDAO;
-import Model.UserData;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -14,14 +14,13 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
 
 /**
  *
  * @author HP
  */
-@WebServlet(name="AuthenUserAdServlet", urlPatterns={"/authenUserAd"})
-public class AuthenUserAdServlet extends HttpServlet {
+@WebServlet(name="UpdateOrderServlet", urlPatterns={"/updateUser"})
+public class UpdateUserServlet extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -38,10 +37,10 @@ public class AuthenUserAdServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet AuthenUserAdServlet</title>");  
+            out.println("<title>Servlet UpdateOrderServlet</title>");  
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet AuthenUserAdServlet at " + request.getContextPath () + "</h1>");
+            out.println("<h1>Servlet UpdateOrderServlet at " + request.getContextPath () + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -58,24 +57,23 @@ public class AuthenUserAdServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-       // processRequest(request, response);
-       String action = request.getParameter("action");
-        HttpSession session = request.getSession();
-        UserData account = (UserData) session.getAttribute("account");
-        if (account == null || account.getRole() != 2) {
-            response.sendRedirect("login");
-        } else if (action.equals("update")) {
-            String id_raw = request.getParameter("uid");
-            int id;
-            UserDAO cdb = new UserDAO();
-            try {
-                id = Integer.parseInt(id_raw);
-                UserData user = cdb.getAccount(id);
-                request.setAttribute("user", user);
-                request.getRequestDispatcher("updateUserDashboard.jsp").forward(request, response);
-            } catch (Exception e) {
-            }
+        //processRequest(request, response);
+        PrintWriter out = response.getWriter();
+        out.print("this is updateUser");
+        String rid_raw = request.getParameter("rid");
+        String uid_raw = request.getParameter("uid");
+        UserDAO o = new UserDAO();
+        int uid, rid;
+        try {
+            uid = Integer.parseInt(uid_raw);
+            rid = Integer.parseInt(rid_raw);
+            o.updateUser(uid,rid);
+            request.getRequestDispatcher("listorder").forward(request, response);
+        } catch (Exception e) {
         }
+        
+        
+        
     } 
 
     /** 

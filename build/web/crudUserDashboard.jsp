@@ -345,9 +345,9 @@
                                                         <td>${listUser.phone}</td>
                                                         <td>${listUser.address}</td>
                                                         <td>${listUser.dob}</td>
-                                                        <td><strong>"User"</strong> </td>
+                                                        <td><strong>User</strong> </td>
                                                         <td>
-                                                            <a href="authenUserAd?action=update&uid=${listProduct.id}"><i class="fa-solid fa-pen-to-square"></i></a>
+                                                            <a href="authenUserAd?action=update&uid=${listUser.id}"><i class="fa-solid fa-pen-to-square"></i></a>
                                                         </td>
                                                     </tr>
                                                 </c:forEach>

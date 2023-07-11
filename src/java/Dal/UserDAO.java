@@ -121,17 +121,36 @@ public class UserDAO extends DBContext {
         }
         return 0;
     }
+
+    public int updateUser(int id, int rid) {
+
+        String sql = "UPDATE [dbo].[UserData]\n"
+                + "   SET rid = ?"
+                + " WHERE id = ?";
+        System.out.println(sql);
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setInt(1, rid);
+            st.setInt(2, id);
+            return st.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println(e);
+
+        }
+        return 0;
+    }
+
     public List<UserData> getAllUser() {
         String sql = "SELECT *\n"
                 + "  FROM [dbo].[UserData]\n"
-                + "  where role = 1 ";
+                + "  where rid = 1 ";
         List<UserData> list = new ArrayList<>();
-        
+
         try {
             PreparedStatement st = connection.prepareStatement(sql);
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
-                UserData u = new UserData(rs.getInt("id"), rs.getString("fullname"), rs.getString("email"), rs.getString("phone"), rs.getString("address"), rs.getString("Dob"), rs.getString("username"), rs.getString("password"), rs.getInt("rid"));          
+                UserData u = new UserData(rs.getInt("id"), rs.getString("fullname"), rs.getString("email"), rs.getString("phone"), rs.getString("address"), rs.getString("Dob"), rs.getString("username"), rs.getString("password"), rs.getInt("rid"));
                 list.add(u);
             }
         } catch (Exception e) {
@@ -141,6 +160,6 @@ public class UserDAO extends DBContext {
 
     public static void main(String[] args) {
         UserDAO d = new UserDAO();
-        System.out.println(d.updateUser("Hoang Thu Phuong", "htphoangphuong12@gmail.com", "0818165923", "Thai Binh", "01/07/2003", 1));
+        System.out.println(d.getAllUser().size());
     }
 }

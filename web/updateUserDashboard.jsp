@@ -321,38 +321,37 @@
                             <!-- Advanced Tables -->
                             <div class="panel panel-default">
                                 <div class="panel-heading">
-                                    Người dùng
+                                    Chỉnh sửa người dùng
                                 </div>
                                 <div class="panel-body">
                                     <div class="table-responsive">
-                                        <table class="table table-striped table-bordered table-hover" id="dataTables-example">
-                                            <thead>
-                                                <tr>
-                                                    <th>Họ và tên</th>
-                                                    <th>Email</th>
-                                                    <th>Số điện thoại</th>
-                                                    <th>Địa chỉ</th>
-                                                    <th>Ngày sinh</th>
-                                                    <th>Chức năng</th>
-                                                    <th>Sửa</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <c:forEach items="${sessionScope.listUserAd}" var = "listUser">
-                                                    <tr>
-                                                        <td>${listUser.fullname}</td>
-                                                        <td>${listUser.email}</td>
-                                                        <td>${listUser.phone}</td>
-                                                        <td>${listUser.address}</td>
-                                                        <td>${listUser.dob}</td>
-                                                        <td><strong>User</strong> </td>
-                                                        <td>
-                                                            <a href="authenUserAd?action=update&uid=${listUser.id}"><i class="fa-solid fa-pen-to-square"></i></a>
-                                                        </td>
+                                        <form action="updateUser" >
+                                            <c:set value="${requestScope.user}" var="u" ></c:set>
+                                                <table class="table table-striped table-bordered table-hover" >
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Họ và tên</th>
+                                                            <th>Email</th>
+                                                            <th>Số điện thoại</th>
+                                                            <th>Địa chỉ</th>
+                                                            <th>Ngày sinh</th>
+                                                            <th>Chức năng</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td><input type="text" readonly value="${u.fullname}"></td>
+                                                        <td><input type="text" readonly value="${u.email}"></td>
+                                                        <td><input type="text" readonly  value="${u.phone}"></td>
+                                                        <td><input type="text" readonly  value="${u.address}"></td>
+                                                        <td><input type="text" readonly value="${u.dob}"></td>
+                                                        <td><input type="text"  name="rid" value="${u.role}"> </td>
                                                     </tr>
-                                                </c:forEach>
-                                            </tbody>
-                                        </table>
+                                                    <input type="text" hidden name="uid" value="${u.id}">
+                                                </tbody>
+                                            </table>
+                                            <input type="submit" value="Save">
+                                        </form>
                                     </div>
                                 </div>
                             </div>
@@ -383,13 +382,6 @@
             });
         </script>
 
-        <script type="text/javascript">
-            function doDelete(id) {
-                if (confirm("are U sure to delete" + id + "?")) {
-                    window.location.href = "authenAd?action=delete&pid=" + id;
-                }
-            }
-        </script>
         <!-- Custom Js -->
         <script src="assets/js/custom-scripts.js"></script>
 
