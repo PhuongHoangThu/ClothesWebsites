@@ -1,4 +1,4 @@
-/*
+            /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
@@ -66,23 +66,23 @@ public class ListOrder extends HttpServlet {
         ProductDAO d = new ProductDAO();
         OrderDAO p = new OrderDAO();
         List<Orders> listOrderAd = p.getAllOrder();
-        int pageOrderAd, numperpage = 12;
-        int sizeOrderAd = listOrderAd.size();
-        int numOrderAd = (sizeOrderAd % numperpage == 0 ? (sizeOrderAd / numperpage) : (sizeOrderAd / numperpage + 1));
-        String xpageOrderAd = request.getParameter("pageOrderAd");
-        if (xpageOrderAd == null) {
-            pageOrderAd = 1;
-        } else {
-            pageOrderAd = Integer.parseInt(xpageOrderAd);
-        }
-        int start, end;
-        start = (pageOrderAd - 1) * numperpage;
-        end = Math.min(pageOrderAd * numperpage, sizeOrderAd);
-        List<Orders> listOrderSubAd = d.getListOrderByPage(listOrderAd, start, end);
-        session.setAttribute("listOrderAd", listOrderSubAd);
-        session.setAttribute("pageOrderAd", pageOrderAd);
-        session.setAttribute("numOrderAd", numOrderAd);
-        request.getRequestDispatcher("manageOrderAd.jsp").forward(request, response);
+//        int pageOrderAd, numperpage = 12;
+//        int sizeOrderAd = listOrderAd.size();
+//        int numOrderAd = (sizeOrderAd % numperpage == 0 ? (sizeOrderAd / numperpage) : (sizeOrderAd / numperpage + 1));
+//        String xpageOrderAd = request.getParameter("pageOrderAd");
+//        if (xpageOrderAd == null) {
+//            pageOrderAd = 1;
+//        } else {
+//            pageOrderAd = Integer.parseInt(xpageOrderAd);
+//        }
+//        int start, end;
+//        start = (pageOrderAd - 1) * numperpage;
+//        end = Math.min(pageOrderAd * numperpage, sizeOrderAd);
+//        List<Orders> listOrderSubAd = d.getListOrderByPage(listOrderAd, start, end);
+        session.setAttribute("listOrderAd", listOrderAd);
+//        session.setAttribute("pageOrderAd", pageOrderAd);
+//        session.setAttribute("numOrderAd", numOrderAd);
+        request.getRequestDispatcher("crudOrderDashboard.jsp").forward(request, response);
 
     } 
 

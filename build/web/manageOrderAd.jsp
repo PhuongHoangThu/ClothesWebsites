@@ -50,7 +50,7 @@
                                 <td>${listProduct.phoneReceive}</td>
                                 <td>${listProduct.addressReceive}</td>
                                 <td>${listProduct.totalMoney}</td>
-                                <td>${listProduct.status}</td>
+                                <td><strong>${listProduct.status?"Pending":"Delivered"}</strong> </td>
                                 <td>
                                     <a href="authenOrderAd?action=update&oid=${listProduct.id}" class="edit" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
                                 </td>
