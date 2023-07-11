@@ -8,6 +8,8 @@ import Model.UserData;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -118,6 +120,23 @@ public class UserDAO extends DBContext {
 
         }
         return 0;
+    }
+    public List<UserData> getAllUser() {
+        String sql = "SELECT *\n"
+                + "  FROM [dbo].[UserData]\n"
+                + "  where role = 1 ";
+        List<UserData> list = new ArrayList<>();
+        
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                UserData u = new UserData(rs.getInt("id"), rs.getString("fullname"), rs.getString("email"), rs.getString("phone"), rs.getString("address"), rs.getString("Dob"), rs.getString("username"), rs.getString("password"), rs.getInt("rid"));          
+                list.add(u);
+            }
+        } catch (Exception e) {
+        }
+        return list;
     }
 
     public static void main(String[] args) {

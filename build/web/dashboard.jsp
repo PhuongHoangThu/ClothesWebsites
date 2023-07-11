@@ -273,7 +273,7 @@
                                     <a href="crudproduct">Sản phẩm</a>
                                 </li>
                                 <li>
-                                    <a href="#">Người dùng</a>
+                                    <a href="listuser">Người dùng</a>
                                 </li>
                                 <li>
                                     <a href="#">Feedback</a>
