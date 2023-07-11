@@ -4,12 +4,7 @@
  */
 package Controller;
 
-import Dal.OrderDAO;
-import Dal.ProductDAO;
-import Model.Orders;
-import Model.Product;
-import Model.Size;
-import Model.UserData;
+import Dal.UserDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -17,15 +12,13 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
-import java.util.List;
 
 /**
  *
  * @author HP
  */
-@WebServlet(name = "AuthenOrderAdServlet", urlPatterns = {"/authenOrderAd"})
-public class AuthenOrderAdServlet extends HttpServlet {
+@WebServlet(name = "UpdateUserDataServlet", urlPatterns = {"/updateuser"})
+public class UpdateUserDataServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -44,10 +37,10 @@ public class AuthenOrderAdServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet AuthenOrderAdServlet</title>");
+            out.println("<title>Servlet UpdateUserDataServlet</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet AuthenOrderAdServlet at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet UpdateUserDataServlet at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -65,37 +58,16 @@ public class AuthenOrderAdServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        //processRequest(request, response);
-        PrintWriter out = response.getWriter();
-        String action = request.getParameter("action");
-        HttpSession session = request.getSession();
-        UserData account = (UserData) session.getAttribute("account");
-        if (account == null || account.getRole() != 2) {
-            response.sendRedirect("login");
-        } else if (action.equals("update")) {
-            String id_raw = request.getParameter("oid");
-            int id;
-            OrderDAO cdb = new OrderDAO();
-            try {
-                id = Integer.parseInt(id_raw);
-                Orders c = cdb.getOrderByOid(id);
-                request.setAttribute("order", c);
-                request.getRequestDispatcher("updateOrderAd.jsp").forward(request, response);
-            } catch (Exception e) {
-            }
-
-        } else if (action.equals("delete")) {
-            String pid_raw = request.getParameter("pid");
-
-            int pid;
-            try {
-                pid = Integer.parseInt(pid_raw);
-                ProductDAO cdb = new ProductDAO();
-                cdb.deleteteCategoryByID(pid);
-                response.sendRedirect("crudproduct");
-            } catch (Exception e) {
-                out.println(e);
-            }
+        String rid_raw = request.getParameter("rid");
+        String uid_raw = request.getParameter("uid");
+        UserDAO o = new UserDAO();
+        int uid, rid;
+        try {
+            uid = Integer.parseInt(uid_raw);
+            rid = Integer.parseInt(rid_raw);
+            o.updateUser(uid, rid);
+            request.getRequestDispatcher("listuser").forward(request, response);
+        } catch (Exception e) {
         }
     }
 

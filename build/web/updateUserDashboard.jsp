@@ -325,7 +325,7 @@
                                 </div>
                                 <div class="panel-body">
                                     <div class="table-responsive">
-                                        <form action="updateUser" >
+                                        <form action="updateuser" >
                                             <c:set value="${requestScope.user}" var="u" ></c:set>
                                                 <table class="table table-striped table-bordered table-hover" >
                                                     <thead>

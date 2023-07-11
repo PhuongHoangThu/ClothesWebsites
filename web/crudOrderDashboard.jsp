@@ -347,7 +347,7 @@
                                                         <td>${listProduct.totalMoney}</td>
                                                         <td><strong>${listProduct.status?"Pending":"Delivered"}</strong> </td>
                                                         <td>
-                                                            <a href="authenOrderAd?action=update&oid=${listProduct.id}"><i class="fa-solid fa-pen-to-square"></i></a>
+                                                            <a href="authenorder?action=update&oid=${listProduct.id}"><i class="fa-solid fa-pen-to-square"></i></a>
                                                         </td>
                                                     </tr>
                                                 </c:forEach>
