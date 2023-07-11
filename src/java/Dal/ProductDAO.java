@@ -148,6 +148,36 @@ public class ProductDAO extends DBContext {
         }
     }
 
+    public void updateSize(int pid, int quantity, List<SizeNameAndQuantity> listQuantity) {
+        try {
+            int oid = pid;
+            for (SizeNameAndQuantity i : listQuantity) {
+                String sql2 = "UPDATE [dbo].[Size]\n"
+                        + "   SET [name] = ?\n"
+                        + "      ,[pid] = ?\n"
+                        + "      ,[quantity] = ?\n"
+                        + " WHERE id = ?";
+                PreparedStatement st2 = connection.prepareStatement(sql2);
+                st2.setString(1, i.getName());
+                st2.setInt(2, oid);
+                st2.setInt(3, i.getQuantity());
+                st2.setInt(4, getProductByidAndSize(oid, i.getName()).getId());
+                System.out.println("1" + getProductByidAndSize(oid, i.getName()).getId());
+                st2.executeUpdate();
+                // thay đổi số lượng bảng product
+                String sql = "UPDATE [dbo].[Product]\n"
+                        + " SET [quantity] = ?\n"
+                        + " WHERE id = ?";
+                PreparedStatement st = connection.prepareStatement(sql);
+                st.setInt(1, quantity);
+                st.setInt(2, pid);
+                st.executeUpdate();
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }
+
     public void deleteteCategoryByID(int pid) {
         try {
             // xóa size trong orderdetail

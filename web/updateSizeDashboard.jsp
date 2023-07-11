@@ -321,43 +321,31 @@
                             <!-- Advanced Tables -->
                             <div class="panel panel-default">
                                 <div class="panel-heading">
-                                    Sản phẩm
+                                    Chỉnh sửa số lượng sản phẩm
                                 </div>
                                 <div class="panel-body">
                                     <div class="table-responsive">
-                                        <table class="table table-striped table-bordered table-hover" id="dataTables-example">
-                                            <thead>
-                                                <tr>
-                                                    <th>Tên sản phẩm</th>
-                                                    <th>Hình ảnh sản phẩm</th>
-                                                    <th>Giá bán sản phẩm</th>
-                                                    <th>Giá gốc sản phẩm</th>
-                                                    <th>Mô tả sản phẩm</th>
-                                                    <th>Ngày tạo</th>
-                                                    <th>Ngày sửa</th>
-                                                    <th>Số lượng</th>
-                                                    <th>Sửa/Xóa</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <c:forEach items="${sessionScope.listAd}" var = "listProduct">
-                                                    <tr class="gradeA">
-                                                        <td><a href="detailProductAd?pid=${listProduct.id}">${listProduct.name}</a></td>
-                                                        <td><img width="40px" height="40px" src="${listProduct.image}" ></td>
-                                                        <td>${listProduct.price}</td>
-                                                        <td>${listProduct.priceOriginal}</td>
-                                                        <td>${listProduct.description}</td>
-                                                        <td>${listProduct.createDate}</td>
-                                                        <td>${listProduct.updateDate}</td>
-                                                        <td>${listProduct.quantity}</td>
-                                                        <td>
-                                                            <a href="authenAd?action=update&pid=${listProduct.id}" ><i class="fa-solid fa-pen-to-square"></i></a>
-                                                            <a href="#" onclick="doDelete('${listProduct.id}')" ><i class="fa-solid fa-trash"></i></a>
-                                                        </td>
-                                                    </tr>
-                                                </c:forEach>
-                                            </tbody>
-                                        </table>
+                                        <form action="updateSizeDashboard" >
+                                            <c:set value="${sessionScope.product}" var="p" ></c:set>
+                                                <table class="table table-striped table-bordered table-hover" >
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Tên size</th>
+                                                            <th>Số lượng</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                    <c:forEach items="${sessionScope.productDetail}" var="s">
+                                                        <tr>
+                                                            <td><input type="text" name="name" value="${s.name}" readonly></td>
+                                                            <td><input type="text" name="quantity${s.name}" value="${s.quantity}" ></td>
+                                                        </tr>
+                                                    </c:forEach>
+                                                        <tr><input type="text" hidden name="pid" value="${p.id}" readonly></tr>
+                                                </tbody>
+                                            </table>
+                                            <input type="submit" value="Save">
+                                        </form>
                                     </div>
                                 </div>
                             </div>
@@ -383,18 +371,11 @@
         <script src="assets/js/dataTables/jquery.dataTables.js"></script>
         <script src="assets/js/dataTables/dataTables.bootstrap.js"></script>
         <script>
-                                                                $(document).ready(function () {
-                                                                    $('#dataTables-example').dataTable();
-                                                                });
+            $(document).ready(function () {
+                $('#dataTables-example').dataTable();
+            });
         </script>
 
-        <script type="text/javascript">
-            function doDelete(id) {
-                if (confirm("are U sure to delete" + id + "?")) {
-                    window.location.href = "authenAd?action=delete&pid=" + id;
-                }
-            }
-        </script>
         <!-- Custom Js -->
         <script src="assets/js/custom-scripts.js"></script>
 

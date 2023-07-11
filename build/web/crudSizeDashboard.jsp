@@ -325,26 +325,28 @@
                                 </div>
                                 <div class="panel-body">
                                     <div class="table-responsive">
-                                        <table class="table table-striped table-bordered table-hover" id="dataTables-example">
-                                            <thead>
-                                                <tr>
-                                                    <th>Tên size</th>
-                                                    <th>Số lượng</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <c:set value="${sessionScope.product}" var="p" ></c:set>
-                                                <c:forEach items="${sessionScope.productDetail}" var="s">
+                                        <form action="action" name="form">
+                                            <table class="table table-striped table-bordered table-hover" id="dataTables-example">
+                                                <thead>
                                                     <tr>
-                                                        <td><input type="text" name="name" value="${s.name}" readonly=""></td>
-                                                        <td><input type="text" name="quantity" value="${s.quantity}" readonly=""></td>
-                                                        <td>
-                                                            <a href="authenSize?action=update&pid=${p.id}" ><i class="fa-solid fa-pen-to-square"></i></a>
+                                                        <th>Tên size</th>
+                                                        <th>Số lượng</th>
                                                     </tr>
-                                                </c:forEach>
+                                                </thead>
+                                                <tbody>
+                                                    <c:set value="${sessionScope.product}" var="p" ></c:set>
+                                                    <c:forEach items="${sessionScope.productDetail}" var="s">
+                                                        <tr>
+                                                            <td>${s.name}</td>
+                                                            <td>${s.quantity}</td>
+                                                            <td>
+                                                                <a href="authenSize?action=update&pid=${p.id}" ><i class="fa-solid fa-pen-to-square"></i></a>
+                                                        </tr>
+                                                    </c:forEach>
 
-                                            </tbody>
-                                        </table>
+                                                </tbody>
+                                            </table>
+                                        </form>
                                     </div>
                                 </div>
                             </div>
@@ -370,17 +372,11 @@
         <script src="assets/js/dataTables/jquery.dataTables.js"></script>
         <script src="assets/js/dataTables/dataTables.bootstrap.js"></script>
         <script>
-            $(document).ready(function () {
-                $('#dataTables-example').dataTable();
-            });
+                                                                    $(document).ready(function () {
+                                                                        $('#dataTables-example').dataTable();
+                                                                    });
         </script>
-        <script type="text/javascript">
-            function doDelete(id) {
-                if (confirm("are U sure to delete" + id + "?")) {
-                    window.location.href = "authenAd?action=delete&pid=" + id;
-                }
-            }
-        </script>
+
         <!-- Custom Js -->
         <script src="assets/js/custom-scripts.js"></script>
 

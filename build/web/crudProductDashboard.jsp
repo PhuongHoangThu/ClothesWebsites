@@ -387,6 +387,7 @@
                                                                     $('#dataTables-example').dataTable();
                                                                 });
         </script>
+
         <script type="text/javascript">
             function doDelete(id) {
                 if (confirm("are U sure to delete" + id + "?")) {

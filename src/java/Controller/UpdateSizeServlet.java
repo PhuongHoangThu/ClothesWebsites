@@ -5,9 +5,8 @@
 package Controller;
 
 import Dal.ProductDAO;
-import Model.Product;
-import Model.Size;
-import Model.UserData;
+import Model.Category;
+import Model.SizeNameAndQuantity;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -15,15 +14,15 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
  *
  * @author HP
  */
-@WebServlet(name = "AuthenSizeServlet", urlPatterns = {"/authenSize"})
-public class AuthenSizeServlet extends HttpServlet {
+@WebServlet(name = "UpdateSizeServlet", urlPatterns = {"/updateSizeDashboard"})
+public class UpdateSizeServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -42,10 +41,10 @@ public class AuthenSizeServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet AuthenSizeServlet</title>");
+            out.println("<title>Servlet UpdateSizeServlet</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet AuthenSizeServlet at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet UpdateSizeServlet at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -65,22 +64,30 @@ public class AuthenSizeServlet extends HttpServlet {
             throws ServletException, IOException {
         //processRequest(request, response);
         PrintWriter out = response.getWriter();
-        String action = request.getParameter("action");
-        HttpSession session = request.getSession();
-        UserData account = (UserData) session.getAttribute("account");
-        if (account == null || account.getRole() != 2) {
-            response.sendRedirect("login");
-        } else if (action.equals("update")) {
-            String id_raw = request.getParameter("pid");
-            int id;
-            ProductDAO cdb = new ProductDAO();
-            try {
-                id = Integer.parseInt(id_raw);
-                List<Size> listSize = cdb.getSizeByPid(id);
-                request.setAttribute("listSize", listSize);
-                request.getRequestDispatcher("updateSizeDashboard.jsp").forward(request, response);
-            } catch (Exception e) {
-            }
+        String quantityS_raw = request.getParameter("quantityS");
+        String quantityM_raw = request.getParameter("quantityM");
+        String quantityL_raw = request.getParameter("quantityL");
+        String quantityXL_raw = request.getParameter("quantityXL");
+        String pid_raw = request.getParameter("pid");
+        List<SizeNameAndQuantity> listQuantity = new ArrayList<>();
+
+        int pid, quantity, quantityS, quantityM, quantityL, quantityXL;
+        try {
+            pid = Integer.parseInt(pid_raw);
+            quantityS = Integer.parseInt(quantityS_raw);
+            quantityM = Integer.parseInt(quantityM_raw);
+            quantityL = Integer.parseInt(quantityL_raw);
+            quantityXL = Integer.parseInt(quantityXL_raw);
+            listQuantity.add(new SizeNameAndQuantity("S", quantityS));
+            listQuantity.add(new SizeNameAndQuantity("M", quantityM));
+            listQuantity.add(new SizeNameAndQuantity("L", quantityL));
+            listQuantity.add(new SizeNameAndQuantity("XL", quantityXL));
+            quantity = quantityS + quantityL + quantityXL + quantityM;     
+            ProductDAO d = new ProductDAO();
+            d.updateSize(pid, quantity, listQuantity);
+            response.sendRedirect("crudproduct");
+        } catch (Exception e) {
+            out.print(e);
         }
     }
 
