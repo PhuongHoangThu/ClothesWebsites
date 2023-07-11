@@ -65,35 +65,20 @@ public class AddNewProduct extends HttpServlet {
         // thêm sản phẩm mới vào db thì sản phẩm mới sẽ có so lượng các size từ tính tổng các size để nhập vào các 
         PrintWriter out = response.getWriter();
         String name = request.getParameter("name");
-        out.println(name);
         String price_raw = request.getParameter("price");
-        out.println(price_raw);
         String image = request.getParameter("image");
-        out.println(image);
         String description = request.getParameter("description");
-        out.println(description);
         String createDate = request.getParameter("createDate");
-        out.println(createDate);
         String updateDate = request.getParameter("updateDate");
-        out.println(updateDate);
         String quantityS_raw = request.getParameter("quantityS");
-        out.println(quantityS_raw);
         String quantityM_raw = request.getParameter("quantityM");
-        out.println(quantityM_raw);
         String quantityL_raw = request.getParameter("quantityL");
-        out.println(quantityL_raw);
         String quantityXL_raw = request.getParameter("quantityXL");
-        out.println(quantityXL_raw);
         String color = request.getParameter("color");
-        out.println(color);
         String material = request.getParameter("material");
-        out.println(material);
         String priceOriginal_raw = request.getParameter("priceOriginal");
-        out.println(priceOriginal_raw);
         String quantitySold_raw = request.getParameter("quantitySold");
-        out.println(quantitySold_raw);
         String cid_raw = request.getParameter("cid");
-        out.println(cid_raw);
         List<SizeNameAndQuantity> listQuantity = new ArrayList<>();
         int price, quantity, quantityS, quantityM, quantityL, quantityXL, priceOriginal, quantitySold, cid;
         try {
@@ -114,10 +99,7 @@ public class AddNewProduct extends HttpServlet {
             Category c = new Category();
             ProductDAO d = new ProductDAO();
             c = d.getCategoryById(cid);
-
-            out.print("start new");
             d.insertNewProduct(name, price, image, description, createDate, updateDate, quantity, color, material, priceOriginal, quantitySold, c, listQuantity);
-            out.print("finish new");
             response.sendRedirect("crudproduct");
         } catch (Exception e) {
         }

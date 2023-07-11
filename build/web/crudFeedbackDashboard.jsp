@@ -1,17 +1,25 @@
-﻿<!DOCTYPE html>
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>﻿
+<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
     <head>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Free Bootstrap Admin Theme : Master</title>
+        <title>Free Bootstrap Admin html Template : Master</title>
         <!-- Bootstrap Styles-->
         <link href="assets/css/bootstrap.css" rel="stylesheet" />
         <!-- FontAwesome Styles-->
         <link href="assets/css/font-awesome.css" rel="stylesheet" />
+        <!-- Morris Chart Styles-->
+
         <!-- Custom Styles-->
         <link href="assets/css/custom-styles.css" rel="stylesheet" />
         <!-- Google Fonts-->
         <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css' />
+        <!-- TABLE STYLES-->
+        <link href="assets/js/dataTables/dataTables.bootstrap.css" rel="stylesheet" />
+        <script src="https://kit.fontawesome.com/47f71e79b1.js" crossorigin="anonymous"></script>
     </head>
     <body>
         <div id="wrapper">
@@ -293,209 +301,62 @@
                     <div class="row">
                         <div class="col-md-12">
                             <h1 class="page-header">
-                                Forms Page <small>Best form elements.</small>
+                                Trang sản phẩm 
                             </h1>
                         </div>
                     </div> 
                     <!-- /. ROW  -->
+
                     <div class="row">
-                        <div class="col-lg-12">
+                        <div class="col-md-12">
+                            <!-- Advanced Tables -->
                             <div class="panel panel-default">
                                 <div class="panel-heading">
-                                    Basic Form Elements
+                                    Phản hồi khách hàng
                                 </div>
                                 <div class="panel-body">
-                                    <div class="row">
-                                        <div class="col-lg-6">
-                                            <form role="form">
-                                                <div class="form-group">
-                                                    <label>Text Input</label>
-                                                    <input class="form-control">
-                                                        <p class="help-block">Example block-level help text here.</p>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label>Text Input with Placeholder</label>
-                                                    <input class="form-control" placeholder="Enter text">
-                                                </div>
-                                                <div class="form-group">
-                                                    <label>Static Control</label>
-                                                    <p class="form-control-static">email@example.com</p>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label>File input</label>
-                                                    <input type="file">
-                                                </div>
-                                                <div class="form-group">
-                                                    <label>Text area</label>
-                                                    <textarea class="form-control" rows="3"></textarea>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label>Checkboxes</label>
-                                                    <div class="checkbox">
-                                                        <label>
-                                                            <input type="checkbox" value="">Checkbox 1
-                                                        </label>
-                                                    </div>
-                                                    <div class="checkbox">
-                                                        <label>
-                                                            <input type="checkbox" value="">Checkbox 2
-                                                        </label>
-                                                    </div>
-                                                    <div class="checkbox">
-                                                        <label>
-                                                            <input type="checkbox" value="">Checkbox 3
-                                                        </label>
-                                                    </div>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label>Inline Checkboxes</label>
-                                                    <label class="checkbox-inline">
-                                                        <input type="checkbox">1
-                                                    </label>
-                                                    <label class="checkbox-inline">
-                                                        <input type="checkbox">2
-                                                    </label>
-                                                    <label class="checkbox-inline">
-                                                        <input type="checkbox">3
-                                                    </label>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label>Radio Buttons</label>
-                                                    <div class="radio">
-                                                        <label>
-                                                            <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked="">Radio 1
-                                                        </label>
-                                                    </div>
-                                                    <div class="radio">
-                                                        <label>
-                                                            <input type="radio" name="optionsRadios" id="optionsRadios2" value="option2">Radio 2
-                                                        </label>
-                                                    </div>
-                                                    <div class="radio">
-                                                        <label>
-                                                            <input type="radio" name="optionsRadios" id="optionsRadios3" value="option3">Radio 3
-                                                        </label>
-                                                    </div>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label>Inline Radio Buttons</label>
-                                                    <label class="radio-inline">
-                                                        <input type="radio" name="optionsRadiosInline" id="optionsRadiosInline1" value="option1" checked="">1
-                                                    </label>
-                                                    <label class="radio-inline">
-                                                        <input type="radio" name="optionsRadiosInline" id="optionsRadiosInline2" value="option2">2
-                                                    </label>
-                                                    <label class="radio-inline">
-                                                        <input type="radio" name="optionsRadiosInline" id="optionsRadiosInline3" value="option3">3
-                                                    </label>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label>Selects</label>
-                                                    <select class="form-control">
-                                                        <option>1</option>
-                                                        <option>2</option>
-                                                        <option>3</option>
-                                                        <option>4</option>
-                                                        <option>5</option>
-                                                    </select>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label>Multiple Selects</label>
-                                                    <select multiple="" class="form-control">
-                                                        <option>1</option>
-                                                        <option>2</option>
-                                                        <option>3</option>
-                                                        <option>4</option>
-                                                        <option>5</option>
-                                                    </select>
-                                                </div>
-                                                <button type="submit" class="btn btn-default">Submit Button</button>
-                                                <button type="reset" class="btn btn-default">Reset Button</button>
-                                            </form>
-                                        </div>
-                                        <!-- /.col-lg-6 (nested) -->
-                                        <div class="col-lg-6">
-                                            <h4>Disabled Form States</h4>
-                                            <form role="form">
-                                                <fieldset disabled="">
-                                                    <div class="form-group">
-                                                        <label for="disabledSelect">Disabled input</label>
-                                                        <input class="form-control" id="disabledInput" type="text" placeholder="Disabled input" disabled="">
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label for="disabledSelect">Disabled select menu</label>
-                                                        <select id="disabledSelect" class="form-control">
-                                                            <option>Disabled select</option>
-                                                        </select>
-                                                    </div>
-                                                    <div class="checkbox">
-                                                        <label>
-                                                            <input type="checkbox">Disabled Checkbox
-                                                        </label>
-                                                    </div>
-                                                    <button type="submit" class="btn btn-primary">Disabled Button</button>
-                                                </fieldset>
-                                            </form>
-                                            <h4>Form Validation States</h4>
-                                            <form role="form">
-                                                <div class="form-group has-success">
-                                                    <label class="control-label" for="inputSuccess">Input with success</label>
-                                                    <input type="text" class="form-control" id="inputSuccess">
-                                                </div>
-                                                <div class="form-group has-warning">
-                                                    <label class="control-label" for="inputWarning">Input with warning</label>
-                                                    <input type="text" class="form-control" id="inputWarning">
-                                                </div>
-                                                <div class="form-group has-error">
-                                                    <label class="control-label" for="inputError">Input with error</label>
-                                                    <input type="text" class="form-control" id="inputError">
-                                                </div>
-                                            </form>
-                                            <h4>Input Groups</h4>
-                                            <form role="form">
-                                                <div class="form-group input-group">
-                                                    <span class="input-group-addon">@</span>
-                                                    <input type="text" class="form-control" placeholder="Username">
-                                                </div>
-                                                <div class="form-group input-group">
-                                                    <input type="text" class="form-control">
-                                                        <span class="input-group-addon">.00</span>
-                                                </div>
-                                                <div class="form-group input-group">
-                                                    <span class="input-group-addon"><i class="fa fa-eur"></i>
-                                                    </span>
-                                                    <input type="text" class="form-control" placeholder="Font Awesome Icon">
-                                                </div>
-                                                <div class="form-group input-group">
-                                                    <span class="input-group-addon">$</span>
-                                                    <input type="text" class="form-control">
-                                                        <span class="input-group-addon">.00</span>
-                                                </div>
-                                                <div class="form-group input-group">
-                                                    <input type="text" class="form-control">
-                                                        <span class="input-group-btn">
-                                                            <button class="btn btn-default" type="button"><i class="fa fa-search"></i>
-                                                            </button>
-                                                        </span>
-                                                </div>
-                                            </form>
-                                        </div>
-                                        <!-- /.col-lg-6 (nested) -->
+                                    <div class="table-responsive">
+                                        <table class="table table-striped table-bordered table-hover" id="dataTables-example">
+                                            <thead>
+                                                <tr>
+                                                    <th>Mã đơn đặt hàng</th>
+                                                    <th>Tên người nhận</th>
+                                                    <th>Số điện thoại người nhận</th>
+                                                    <th>Địa chỉ giao hàng</th>
+                                                    <th>Tổng tiền hàng</th>
+                                                    <th>Tình trạng giao hàng</th>
+                                                    <th>Sửa</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <c:forEach items="${sessionScope.listOrderAd}" var = "listProduct">
+                                                    <tr>
+                                                        <td>${listProduct.id}</td>
+                                                        <td>${listProduct.nameReceive}</td>
+                                                        <td>${listProduct.phoneReceive}</td>
+                                                        <td>${listProduct.addressReceive}</td>
+                                                        <td>${listProduct.totalMoney}</td>
+                                                        <td><strong>${listProduct.status?"Pending":"Delivered"}</strong> </td>
+                                                        <td>
+                                                            <a href="authenorder?action=update&oid=${listProduct.id}"><i class="fa-solid fa-pen-to-square"></i></a>
+                                                        </td>
+                                                    </tr>
+                                                </c:forEach>
+                                            </tbody>
+                                        </table>
                                     </div>
-                                    <!-- /.row (nested) -->
                                 </div>
-                                <!-- /.panel-body -->
                             </div>
-                            <!-- /.panel -->
+                            <!--End Advanced Tables -->
                         </div>
-                        <!-- /.col-lg-12 -->
                     </div>
-                    <footer><p>All right reserved. Template by: <a href="http://webthemez.com">WebThemez</a></p></footer>
+                    <!-- /. ROW  -->
                 </div>
-                <!-- /. PAGE INNER  -->
+                <footer><p>All right reserved. Template by: <a href="http://webthemez.com">WebThemez</a></p></footer>
             </div>
-            <!-- /. PAGE WRAPPER  -->
+            <!-- /. PAGE INNER  -->
         </div>
+        <!-- /. PAGE WRAPPER  -->
         <!-- /. WRAPPER  -->
         <!-- JS Scripts-->
         <!-- jQuery Js -->
@@ -504,6 +365,22 @@
         <script src="assets/js/bootstrap.min.js"></script>
         <!-- Metis Menu Js -->
         <script src="assets/js/jquery.metisMenu.js"></script>
+        <!-- DATA TABLE SCRIPTS -->
+        <script src="assets/js/dataTables/jquery.dataTables.js"></script>
+        <script src="assets/js/dataTables/dataTables.bootstrap.js"></script>
+        <script>
+            $(document).ready(function () {
+                $('#dataTables-example').dataTable();
+            });
+        </script>
+
+        <script type="text/javascript">
+            function doDelete(id) {
+                if (confirm("are U sure to delete" + id + "?")) {
+                    window.location.href = "authenAd?action=delete&pid=" + id;
+                }
+            }
+        </script>
         <!-- Custom Js -->
         <script src="assets/js/custom-scripts.js"></script>
 
