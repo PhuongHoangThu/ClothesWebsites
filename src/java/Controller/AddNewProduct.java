@@ -114,10 +114,7 @@ public class AddNewProduct extends HttpServlet {
             Category c = new Category();
             ProductDAO d = new ProductDAO();
             c = d.getCategoryById(cid);
-
-            out.print("start new");
             d.insertNewProduct(name, price, image, description, createDate, updateDate, quantity, color, material, priceOriginal, quantitySold, c, listQuantity);
-            out.print("finish new");
             response.sendRedirect("crudproduct");
         } catch (Exception e) {
         }

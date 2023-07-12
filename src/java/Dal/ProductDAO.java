@@ -27,7 +27,7 @@ public class ProductDAO extends DBContext {
         try {
             PreparedStatement st = connection.prepareStatement(sql);
             ResultSet rs = st.executeQuery();
-            if(rs.next()){
+            if (rs.next()) {
                 revenue = rs.getInt("revenue");
             }
         } catch (Exception e) {
@@ -35,13 +35,14 @@ public class ProductDAO extends DBContext {
 
         return revenue;
     }
+
     public int getProfit() {
         String sql = "select sum(price*quantitySold - (OriginalPrice*quantitySold)) as profit from product";
         int profit = 0;
         try {
             PreparedStatement st = connection.prepareStatement(sql);
             ResultSet rs = st.executeQuery();
-            if(rs.next()){
+            if (rs.next()) {
                 profit = rs.getInt("profit");
             }
         } catch (Exception e) {
@@ -49,13 +50,14 @@ public class ProductDAO extends DBContext {
 
         return profit;
     }
+
     public int getQuantitySold() {
         String sql = "select sum(quantitySold) as quantitySold from Product";
         int quantitySold = 0;
         try {
             PreparedStatement st = connection.prepareStatement(sql);
             ResultSet rs = st.executeQuery();
-            if(rs.next()){
+            if (rs.next()) {
                 quantitySold = rs.getInt("quantitySold");
             }
         } catch (Exception e) {
@@ -63,13 +65,14 @@ public class ProductDAO extends DBContext {
 
         return quantitySold;
     }
+
     public int getQuantityInventory() {
         String sql = "select sum(quantity) as quantity from Product";
         int quantity = 0;
         try {
             PreparedStatement st = connection.prepareStatement(sql);
             ResultSet rs = st.executeQuery();
-            if(rs.next()){
+            if (rs.next()) {
                 quantity = rs.getInt("quantity");
             }
         } catch (Exception e) {
@@ -283,6 +286,17 @@ public class ProductDAO extends DBContext {
 
         }
 
+    }
+
+    public void deleteCategory(int id) {
+        String sql = "DELETE FROM [dbo].[Category]\n"
+                + "      WHERE id = ?";
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setInt(1, id);
+            st.executeUpdate();
+        } catch (Exception e) {
+        }
     }
 
     public List<Product> getAllProductsByCategoryID(int cid, String key, int price, String color, String material) {
@@ -558,6 +572,19 @@ public class ProductDAO extends DBContext {
         return null;
     }
 
+    public void insertCategory(String name) {
+        String sql = "INSERT INTO [dbo].[Category]\n"
+                + "([Categoryname])\n"
+                + "VALUES\n"
+                + "(?)";
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setString(1, name);
+            st.executeUpdate();
+        } catch (Exception e) {
+        }
+    }
+
     public Size getProductByidAndSize(int pid, String size) {
 
         String sql = "select  * from Size where pid = ? and name = ?";
@@ -777,6 +804,19 @@ public class ProductDAO extends DBContext {
         return arr;
     }
 
+    public void updateCategory(int id, String name) {
+        String sql = "UPDATE [dbo].[Category]\n"
+                + "   SET [Categoryname] = ?\n"
+                + " WHERE id = ?";
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setString(1, name);
+            st.setInt(2, id);
+            st.executeUpdate();
+        } catch (Exception e) {
+        }
+    }
+
     public static void main(String[] args) {
 //        ProductDAO dao = new ProductDAO();
 //        String name = "Áo sơ mi";
@@ -814,7 +854,7 @@ public class ProductDAO extends DBContext {
 //        System.out.println("sau : " + list.size());
         ProductDAO d = new ProductDAO();
 //        System.out.println(d.getAllProductsByCategoryID(13, "váy dài", 3, "Trắng", "Đũi").size());
-        System.out.println(d.getRevenue());
+        System.out.println(d.getCategoryById(16).getCategoryname());
 //        d.getAllProductsByCategoryID(13, "váy dài", 2, "Trắng", "Đũi");
 //        d.getAllProductsByCategoryID(13,"" ,0, "", "");
     }

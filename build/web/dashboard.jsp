@@ -265,6 +265,9 @@
                                 <li>
                                     <a href="list">Đơn hàng</a>
                                 </li>
+                                <li>
+                                    <a href="listcategory">Danh mục sản phẩm</a>
+                                </li>
                             </ul>
                         </li>
                         <li>
@@ -329,7 +332,7 @@
                                 </div>
 
                                 <div class="panel-right pull-right">
-                                    <h4>${sessionScope.profit} </h4>
+                                    <h4><fmt:formatNumber pattern="###,###,###" value = "${sessionScope.profit}" type = "number"/>VNĐ</h4>
                                     <strong> Lợi nhuận</strong>
 
                                 </div>

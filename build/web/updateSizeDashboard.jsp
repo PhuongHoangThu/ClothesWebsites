@@ -267,6 +267,9 @@
                                 <li>
                                     <a href="list">Đơn hàng</a>
                                 </li>
+                                <li>
+                                    <a href="category">Danh mục sản phẩm</a>
+                                </li>
                             </ul>
                         </li>
                         <li>
