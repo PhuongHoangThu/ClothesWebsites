@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿<%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
+<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 
     <head>
@@ -246,7 +247,7 @@
                     <ul class="nav" id="main-menu">
 
                         <li>
-                            <a class="active-menu" href="dashboard.jsp"><i class="fa fa-dashboard"></i> Dashboard</a>
+                            <a class="active-menu" href="dashboard"><i class="fa fa-dashboard"></i> Dashboard</a>
                         </li>
                         <li>
                             <a href="#"><i class="fa fa-sitemap"></i> Quản lý trang <span class="fa arrow"></span></a>
@@ -316,8 +317,8 @@
 
                                 </div>
                                 <div class="panel-right pull-right">
-                                    <h3>8,457</h3>
-                                    <strong> Daily Visits</strong>
+                                    <h4><fmt:formatNumber pattern="###,###,###" value = "${sessionScope.revenue}" type = "number"/>VNĐ</h4>
+                                    <strong> Doanh thu</strong>
                                 </div>
                             </div>
                         </div>
@@ -328,8 +329,8 @@
                                 </div>
 
                                 <div class="panel-right pull-right">
-                                    <h3>52,160 </h3>
-                                    <strong> Sales</strong>
+                                    <h4>${sessionScope.profit} </h4>
+                                    <strong> Lợi nhuận</strong>
 
                                 </div>
                             </div>
@@ -341,8 +342,8 @@
 
                                 </div>
                                 <div class="panel-right pull-right">
-                                    <h3>15,823 </h3>
-                                    <strong> Comments </strong>
+                                    <h4>${sessionScope.sale} </h4>
+                                    <strong> Sô lượng đã bán </strong>
 
                                 </div>
                             </div>
@@ -354,8 +355,8 @@
 
                                 </div>
                                 <div class="panel-right pull-right">
-                                    <h3>36,752 </h3>
-                                    <strong>No. of Visits</strong>
+                                    <h4>${sessionScope.inventory} </h4>
+                                    <strong>Sản phẩm trong kho</strong>
 
                                 </div>
                             </div>

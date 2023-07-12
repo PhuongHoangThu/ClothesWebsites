@@ -36,6 +36,27 @@ public class FeedbackDAO extends DBContext {
         }
         return list;
     }
+    public List<Feedback> getFeedbackByPid(int pid) {
+        List<Feedback> list = new ArrayList<>();
+        String sql = "Select * from Feedback where pid = ?";
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setInt(1, pid);
+            ResultSet rs = st.executeQuery();
+            ProductDAO d = new ProductDAO();
+            UserDAO u = new UserDAO();
+            while (rs.next()) {
+                Feedback f = new Feedback();
+                f.setId(rs.getInt("id"));
+                f.setContent(rs.getString("content"));
+                f.setProduct(d.getProductByid(rs.getInt("pid")));
+                f.setUser(u.getAccount(rs.getInt("uid")));
+                list.add(f);
+            }
+        } catch (Exception e) {
+        }
+        return list;
+    }
     public void deleteFeedback(int fid){
         String sql = "Delete Feedback where id = ?";
         try {

@@ -3,13 +3,16 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/HP/OneDrive/Documents/NetBeansProjects/PRJ_Project/web/dashboard.jsp</file>
-            <file>file:/C:/Users/HP/OneDrive/Documents/NetBeansProjects/PRJ_Project/src/java/Dal/UserDAO.java</file>
-            <file>file:/C:/Users/HP/OneDrive/Documents/NetBeansProjects/PRJ_Project/src/java/Controller/AuthenUserAdServlet.java</file>
-            <file>file:/C:/Users/HP/OneDrive/Documents/NetBeansProjects/PRJ_Project/src/java/Controller/ListUser.java</file>
-            <file>file:/C:/Users/HP/OneDrive/Documents/NetBeansProjects/PRJ_Project/src/java/Model/UserData.java</file>
-            <file>file:/C:/Users/HP/OneDrive/Documents/NetBeansProjects/PRJ_Project/web/updateUserDashboard.jsp</file>
-            <file>file:/C:/Users/HP/OneDrive/Documents/NetBeansProjects/PRJ_Project/src/java/Controller/UpdateUserServlet.java</file>
+            <file>file:/C:/Users/HP/OneDrive/Documents/NetBeansProjects/PRJ_Project_xongadmin_chualamsearch/src/java/Model/UserData.java</file>
+            <file>file:/C:/Users/HP/OneDrive/Documents/NetBeansProjects/PRJ_Project_xongadmin_chualamsearch/src/java/Controller/DashboardAnalysisServlet.java</file>
+            <file>file:/C:/Users/HP/OneDrive/Documents/NetBeansProjects/PRJ_Project_xongadmin_chualamsearch/src/java/Controller/LoginServlet.java</file>
+            <file>file:/C:/Users/HP/OneDrive/Documents/NetBeansProjects/PRJ_Project_xongadmin_chualamsearch/web/detail.jsp</file>
+            <file>file:/C:/Users/HP/OneDrive/Documents/NetBeansProjects/PRJ_Project_xongadmin_chualamsearch/web/home.jsp</file>
+            <file>file:/C:/Users/HP/OneDrive/Documents/NetBeansProjects/PRJ_Project_xongadmin_chualamsearch/src/java/Dal/ProductDAO.java</file>
+            <file>file:/C:/Users/HP/OneDrive/Documents/NetBeansProjects/PRJ_Project_xongadmin_chualamsearch/src/java/Controller/DetailServlet.java</file>
+            <file>file:/C:/Users/HP/OneDrive/Documents/NetBeansProjects/PRJ_Project_xongadmin_chualamsearch/src/java/Model/Feedback.java</file>
+            <file>file:/C:/Users/HP/OneDrive/Documents/NetBeansProjects/PRJ_Project_xongadmin_chualamsearch/src/java/Dal/FeedbackDAO.java</file>
+            <file>file:/C:/Users/HP/OneDrive/Documents/NetBeansProjects/PRJ_Project_xongadmin_chualamsearch/web/dashboard.jsp</file>
         </group>
     </open-files>
 </project-private>

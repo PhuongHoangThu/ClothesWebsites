@@ -21,6 +21,63 @@ import java.util.List;
  */
 public class ProductDAO extends DBContext {
 
+    public int getRevenue() {
+        String sql = "select sum(price*quantitySold) as revenue from product";
+        int revenue = 0;
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            ResultSet rs = st.executeQuery();
+            if(rs.next()){
+                revenue = rs.getInt("revenue");
+            }
+        } catch (Exception e) {
+        }
+
+        return revenue;
+    }
+    public int getProfit() {
+        String sql = "select sum(price*quantitySold - (OriginalPrice*quantitySold)) as profit from product";
+        int profit = 0;
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            ResultSet rs = st.executeQuery();
+            if(rs.next()){
+                profit = rs.getInt("profit");
+            }
+        } catch (Exception e) {
+        }
+
+        return profit;
+    }
+    public int getQuantitySold() {
+        String sql = "select sum(quantitySold) as quantitySold from Product";
+        int quantitySold = 0;
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            ResultSet rs = st.executeQuery();
+            if(rs.next()){
+                quantitySold = rs.getInt("quantitySold");
+            }
+        } catch (Exception e) {
+        }
+
+        return quantitySold;
+    }
+    public int getQuantityInventory() {
+        String sql = "select sum(quantity) as quantity from Product";
+        int quantity = 0;
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            ResultSet rs = st.executeQuery();
+            if(rs.next()){
+                quantity = rs.getInt("quantity");
+            }
+        } catch (Exception e) {
+        }
+
+        return quantity;
+    }
+
     public List<Product> getAllProducts() {
         String sql = "select * from Product";
         List<Product> list = new ArrayList<>();
@@ -756,8 +813,8 @@ public class ProductDAO extends DBContext {
 //        list.removeAll(list);
 //        System.out.println("sau : " + list.size());
         ProductDAO d = new ProductDAO();
-        System.out.println(d.getAllProductsByCategoryID(13, "váy dài", 3, "Trắng", "Đũi").size());
-        System.out.println(d.getAllProductsByCategoryID(13, "", 0, "", "").size());
+//        System.out.println(d.getAllProductsByCategoryID(13, "váy dài", 3, "Trắng", "Đũi").size());
+        System.out.println(d.getRevenue());
 //        d.getAllProductsByCategoryID(13, "váy dài", 2, "Trắng", "Đũi");
 //        d.getAllProductsByCategoryID(13,"" ,0, "", "");
     }

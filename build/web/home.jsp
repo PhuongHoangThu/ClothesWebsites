@@ -127,7 +127,7 @@
                     <nav class="collapse show navbar navbar-vertical navbar-light align-items-start p-0 border border-top-0 border-bottom-0" id="navbar-vertical">
                         <div class="navbar-nav w-100 overflow-hidden" style="height: 410px">
                             <c:forEach items="${sessionScope.listCate}" var = "listCate">
-                                <a href="shop?cid=listCate.id" class="nav-item nav-link">${listCate.categoryname}</a>
+                                <a href="shop?cid=${listCate.id}" class="nav-item nav-link">${listCate.categoryname}</a>
                             </c:forEach>       
                         </div>
                     </nav>
