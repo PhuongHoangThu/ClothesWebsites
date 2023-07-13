@@ -63,10 +63,11 @@ public class ShopServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        //processRequest(request, response);
         PrintWriter out = response.getWriter();
         HttpSession session = request.getSession();
+        ProductDAO d = new ProductDAO();
         String cid_raw = request.getParameter("cid");
+        int cid;
         String[] pp = {"Dưới 200.000VNĐ",
             "Từ 200.000VNĐ - 500.000VNĐ",
             "Từ 500.000VNĐ - 700.000VNĐ",
@@ -74,37 +75,17 @@ public class ShopServlet extends HttpServlet {
             "Trên 1.000.000đ"};
         boolean[] pb = new boolean[pp.length + 1];
         pb[0] = true;
-        ProductDAO d = new ProductDAO();
-        int cid;
-
         try {
             cid = Integer.parseInt(cid_raw);
-            List<Product> listProduct = d.getAllProductsByCategoryID(cid);
-            int pageProduct, numperpage = 12;
-            int sizeProduct = listProduct.size();
-            int numProduct = (sizeProduct % numperpage == 0 ? (sizeProduct / numperpage) : (sizeProduct / numperpage + 1));
-            String xpageProduct = request.getParameter("pageProduct");
-            if (xpageProduct == null) {
-                pageProduct = 1;
-            } else {
-                pageProduct = Integer.parseInt(xpageProduct);
-            }
-            int startProduct, endProduct;
-            startProduct = (pageProduct - 1) * numperpage;
-            endProduct = Math.min(pageProduct * numperpage, sizeProduct);
-            List<Product> listSubProduct = d.getListByPage(listProduct, startProduct, endProduct);
-            session.setAttribute("cid", cid);
+            List<Product> products = d.getAllProductsByCategoryID(cid);
+            session.setAttribute("products", products);
             session.setAttribute("pp", pp);
             session.setAttribute("pb", pb);
-            session.setAttribute("pageProduct", pageProduct);
-            session.setAttribute("numProduct", numProduct);
-            session.setAttribute("listSubProduct", listSubProduct);
-
+            List<Category> listCate = (List<Category>) session.getAttribute("listCate");
+            session.setAttribute("listCate", listCate);
+            request.getRequestDispatcher("shop.jsp").forward(request, response);
         } catch (Exception e) {
         }
-        List<Category> listCate = (List<Category>) session.getAttribute("listCate");
-        request.setAttribute("listCate", listCate);
-        request.getRequestDispatcher("shop.jsp").forward(request, response);
 
     }
 
@@ -123,38 +104,101 @@ public class ShopServlet extends HttpServlet {
         PrintWriter out = response.getWriter();
         HttpSession session = request.getSession();
         String cid_raw = request.getParameter("cid");
+        String[] price = request.getParameterValues("price");
+        String key = request.getParameter("key");
         String[] pp = {"Dưới 200.000VNĐ",
             "Từ 200.000VNĐ - 500.000VNĐ",
             "Từ 500.000VNĐ - 700.000VNĐ",
             "Từ Từ 700.000VNĐ - 1.000.000VNĐ",
             "Trên 1.000.000đ"};
         boolean[] pb = new boolean[pp.length + 1];
-        pb[0] = true;
         ProductDAO d = new ProductDAO();
+        List<Product> products = new ArrayList<>();
         int cid;
-
         try {
-            cid = Integer.parseInt(cid_raw);
-            List<Product> listProduct = d.getAllProductsByCategoryID(cid);
-            int pageProduct, numperpage = 12;
-            int sizeProduct = listProduct.size();
-            int numProduct = (sizeProduct % numperpage == 0 ? (sizeProduct / numperpage) : (sizeProduct / numperpage + 1));
-            String xpageProduct = request.getParameter("pageProduct");
-            if (xpageProduct == null) {
-                pageProduct = 1;
+            if (cid_raw == null) {
+                cid = 0;
             } else {
-                pageProduct = Integer.parseInt(xpageProduct);
+                cid = Integer.parseInt(cid_raw);
             }
-            int startProduct, endProduct;
-            startProduct = (pageProduct - 1) * numperpage;
-            endProduct = Math.min(pageProduct * numperpage, sizeProduct);
-            List<Product> listSubProduct = d.getListByPage(listProduct, startProduct, endProduct);
-            session.setAttribute("cid", cid);
-            session.setAttribute("pageProduct", pageProduct);
-            session.setAttribute("numProduct", numProduct);
-            session.setAttribute("listSubProduct", listSubProduct);
+            out.println(cid);
+            if (key != null) {
+                products = d.searchByKey(key);
+            }
+            out.println(key);
+            out.print(products.size());
+            if (cid_raw != null) {
+                products = d.getAllProductsByCategoryID(cid);
+            }
+            if (price == null) {
+                pb[0] = true;
+                for (int i = 1; i < pb.length; i++) {
+                    pb[i] = false;
+                }
+            }
+            out.println(price);
+            if (price != null) {
+                int from = 0, to = 0;
+                for (int i = 0; i < price.length; i++) {
+                    out.println("size price: " + price.length);
+                    List<Product> temp = new ArrayList<>();
+                    if (price[i].equals("0")) {
+                        from = 0;
+                        to = 3000000;
+                        products = d.getProductsByPrice(from, to);
+                        pb[0] = true;
+                        break;
+                    } else {
+                        if (price[i].equals("1")) {
+                            from = 0;
+                            to = 200000;
+                            temp = d.getProductsByPrice(from, to);
+                            products.addAll(temp);
+                            pb[1] = true;
+                        }
+                        if (price[i].equals("2")) {
+                            from = 200000;
+                            to = 500000;
+                            temp = d.getProductsByPrice(from, to);
+                            products.addAll(temp);
+                            pb[2] = true;
+                        }
+                        if (price[i].equals("3")) {
+                            from = 500000;
+                            to = 700000;
+                            temp = d.getProductsByPrice(from, to);
+                            products.addAll(temp);
+                            pb[3] = true;
+                        }
+                        if (price[i].equals("4")) {
+                            from = 700000;
+                            to = 1000000;
+                            temp = d.getProductsByPrice(from, to);
+                            products.addAll(temp);
+                            pb[4] = true;
+                        }
+                        if (price[i].equals("5")) {
+                            from = 1000000;
+                            to = 3000000;
+                            temp = d.getProductsByPrice(from, to);
+                            products.addAll(temp);
+                            pb[5] = true;
+                        }
+                    }
+                }
+                out.println("đến price");
 
+                for (int i = 0; i < pb.length; i++) {
+                    out.println(pb[i]);
+                }
+                session.setAttribute("products", products);
+                session.setAttribute("cid", cid);
+                session.setAttribute("key", key);
+                session.setAttribute("pb", pb);
+                session.setAttribute("pp", pp);
+            }
         } catch (Exception e) {
+            out.print(e);
         }
         List<Category> listCate = (List<Category>) session.getAttribute("listCate");
         request.setAttribute("listCate", listCate);

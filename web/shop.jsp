@@ -68,15 +68,29 @@
                     </a>
                 </div>
                 <div class="col-lg-6 col-6 text-left">
-                    <form action="search">
-                        <div class="input-group">
-                            <input type="text" class="form-control" name="searchName" placeholder="Tìm kiếm sản phẩm">
-                            <div class="input-group-append">
-                                <span class="input-group-text bg-transparent text-primary">
-                                    <button onclick="this.form.submit()"><i class="fa fa-search"></i></button> 
-                                </span>
+
+                    <form action="shop" method="post">
+                        <c:if test="${sessionScope.key == null}">
+                            <div class="input-group">
+                                <input type="text" class="form-control" name="key" placeholder="Tìm kiếm sản phẩm">
+                                <div class="input-group-append">
+                                    <span class="input-group-text bg-transparent text-primary">
+                                        <button onclick="this.form.submit()"><i class="fa fa-search"></i></button> 
+                                    </span>
+                                </div>
                             </div>
-                        </div>
+                        </c:if>
+                        <c:if test="${sessionScope.key != null}">
+                            <div class="input-group">
+                                <input type="text" class="form-control" name="key" value="${sessionScope.key}">
+                                <div class="input-group-append">
+                                    <span class="input-group-text bg-transparent text-primary">
+                                        <button onclick="this.form.submit()"><i class="fa fa-search"></i></button> 
+                                    </span>
+                                </div>
+                            </div>
+                        </c:if>
+
                     </form>
                 </div>
                 <div class="col-lg-3 col-6 text-right">
@@ -168,10 +182,10 @@
                         <h5 class="font-weight-semi-bold mb-4">Filter by price</h5>
                         <c:set var="pp" value="${sessionScope.pp}"/>
                         <c:set var="pb" value="${sessionScope.pb}"/>
-                        <form id="f2" action="home1">
+                        <form id="f2" action="shop" method = "post">
                             <input type="checkbox" id="g0" name="price" 
                                    ${pb[0]?"checked":""}                            
-                                   value="0" onclick="setCheck1(this)"/>All<br/>
+                                   value="${0}" onclick="setCheck1(this)"/>All<br/>
                             <c:forEach begin="0" end="${4}"  var="i">
                                 <input type="checkbox" id="g1" name="price" 
                                        ${pb[i+1]?"checked":""}
@@ -217,7 +231,7 @@
                     <!-- Color Start -->
                     <div class="border-bottom mb-4 pb-4">
                         <h5 class="font-weight-semi-bold mb-4">Lọc sản phẩm theo màu</h5>                        
-                        <form action="show" method = "post">
+                        <form action="shop" method = "post">
                             <div class="custom-control custom-radio custom-control-block">
                                 <input type="radio" class="custom-control-input" id="color" name="color" value="all" checked>
                                 <label class="custom-control-label" for="color">Tất cả các màu</label>
@@ -309,7 +323,7 @@
                         </div>
                         <div class="container-fluid pt-5">
                             <div class="row px-xl-5 pb-3">
-                                <c:forEach items = "${sessionScope.listSubProduct}" var="listProduct">
+                                <c:forEach items = "${sessionScope.products}" var="listProduct">
                                     <div class="card-all col-lg-3 col-md-6 col-sm-12 pb-1 ">
                                         <div class="card product-item border-0 mb-4">
                                             <div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
@@ -436,22 +450,22 @@
             <a href="#" class="btn btn-primary back-to-top"><i class="fa fa-angle-double-up"></i></a>
 
             <script type="text/javascript">
-                function setCheck1(obj){
-                var fries = document.getElementsByName('price');
-                if ((obj.id=='g0') && (fries[0].checked==true))
-                {
-                    for (var i = 1; i < fries.length; i++)
-                        fries[i].checked = false;
-                } else{
-                    for (var i = 1; i < fries.length; i++) {
-                        if (fries[i].checked==true) {
-                            fries[0].checked=false;
-                            break;
+                function setCheck1(obj) {
+                    var fries = document.getElementsByName('price');
+                    if ((obj.id === 'g0') && (fries[0].checked === true))
+                    {
+                        for (var i = 1; i < fries.length; i++)
+                            fries[i].checked = false;
+                    } else {
+                        for (var i = 1; i < fries.length; i++) {
+                            if (fries[i].checked === true) {
+                                fries[0].checked = false;
+                                break;
+                            }
                         }
                     }
+                    document.getElementById('f2').submit();
                 }
-                document.getElementById('f2').submit();
-            }
 
             </script>
             <!-- JavaScript Libraries -->

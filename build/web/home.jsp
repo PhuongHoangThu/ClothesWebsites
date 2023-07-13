@@ -69,9 +69,9 @@
                     </a>
                 </div>
                 <div class="col-lg-6 col-6 text-left">
-                    <form action="search">
+                    <form action="shop" method="post">
                         <div class="input-group">
-                            <input type="text" class="form-control" name="searchName" placeholder="Tìm kiếm sản phẩm">
+                            <input type="text" class="form-control" name="key" placeholder="Tìm kiếm sản phẩm">
                             <div class="input-group-append">
                                 <span class="input-group-text bg-transparent text-primary">
                                     <button onclick="this.form.submit()"><i class="fa fa-search"></i></button> 
