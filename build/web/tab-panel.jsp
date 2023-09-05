@@ -254,10 +254,13 @@
                                     <a href="listuser">Người dùng</a>
                                 </li>
                                 <li>
-                                    <a href="feedback">Feedback</a>
+                                    <a href="listFeedback">Feedback</a>
                                 </li>
                                 <li>
                                     <a href="list">Đơn hàng</a>
+                                </li>
+                                <li>
+                                    <a href="listcategory">Danh mục sản phẩm</a>
                                 </li>
                             </ul>
                         </li>

@@ -5,11 +5,15 @@
 package Dal;
 
 import Model.Category;
+import Model.ChartYear;
+import Model.MonthAnalysis;
 import Model.Orders;
 import Model.Product;
+import Model.QuantityMonth;
 import Model.Sale;
 import Model.Size;
 import Model.SizeNameAndQuantity;
+import Model.YearMonthRevenue;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
@@ -20,6 +24,99 @@ import java.util.List;
  * @author HP
  */
 public class ProductDAO extends DBContext {
+
+    public List<ChartYear> getQuantityByYear() {
+        List<ChartYear> list = new ArrayList<>();
+        String sql = "select year(createdate) as years , sum(quantitySold) as quantities\n"
+                + "from Product\n"
+                + "group by Year(createdate)";
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                ChartYear c = new ChartYear();
+                c.setQuantity(rs.getInt("quantities"));
+                c.setYear(rs.getInt("years"));
+                list.add(c);
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return list;
+    }
+
+    public List<QuantityMonth> getQuantityCateByMonthAndYear(int year, int month) {
+        List<QuantityMonth> list = new ArrayList<>();
+        String sql = "select year(createdate) as years , sum(quantitySold) as quantities,Month(createdate) as months, cid\n"
+                + "from Product\n"
+                + "where year(createdate) = ? and Month(createdate) = ? \n"
+                + "group by Year(createdate), Month(createdate), cid";
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setInt(1, year);
+            st.setInt(2, month);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                QuantityMonth c = new QuantityMonth();
+                c.setQuantity(rs.getInt("quantities"));
+                c.setYear(rs.getInt("years"));
+                c.setCategory(getCategoryById(rs.getInt("cid")));
+                c.setMonth(rs.getInt("months"));
+                list.add(c);
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return list;
+    }
+
+    public List<YearMonthRevenue> getRevenueYearMonth(int year) {
+        List<YearMonthRevenue> list = new ArrayList<>();
+        String sql = "select year(createdate) as years , sum(quantitySold) as quantities,Month(createdate) as months,sum(quantitySold*price) as Revenue\n"
+                + "from Product\n"
+                + "where year(createdate) = ? \n"
+                + "group by Year(createdate), Month(createdate)";
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setInt(1, year);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                YearMonthRevenue c = new YearMonthRevenue();
+                c.setQuantity(rs.getInt("quantities"));
+                c.setYear(rs.getInt("years"));
+                c.setMonth(rs.getInt("months"));
+                c.setTotalmoney(rs.getInt("Revenue"));
+                list.add(c);
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return list;
+    }
+
+    public List<MonthAnalysis> getQuantityByMonth(int year) {
+        List<MonthAnalysis> list = new ArrayList<>();
+        String sql = "select year(CreateDate) as years , sum(quantitySold) as quantities,Month(CreateDate) as months\n"
+                + "from Product\n"
+                + "where Year(CreateDate) = ? "
+                + "group by Year(CreateDate), Month(CreateDate)";
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setInt(1, year);
+            System.out.println(sql);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                MonthAnalysis c = new MonthAnalysis();
+                c.setMonth(rs.getInt("months"));
+                c.setQuantity(rs.getInt("quantities"));
+                c.setYear(rs.getInt("years"));
+                list.add(c);
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return list;
+    }
 
     public int getRevenue() {
         String sql = "select sum(price*quantitySold) as revenue from product";
@@ -83,6 +180,93 @@ public class ProductDAO extends DBContext {
 
     public List<Product> getAllProducts() {
         String sql = "select * from Product";
+        List<Product> list = new ArrayList<>();
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                Product e = new Product();
+                e.setId(rs.getInt("id"));
+                e.setName(rs.getString("ProductName"));
+                e.setPrice(rs.getInt("Price"));
+                e.setImage(rs.getString("image"));
+                e.setDescription(rs.getString("Description"));
+                e.setCreateDate(rs.getString("CreateDate"));
+                e.setUpdateDate(rs.getString("UpdateDate"));
+                e.setCategory(getCategoryById(rs.getInt("cid")));
+                e.setQuantity(rs.getInt("quantity"));
+                e.setColor(rs.getString("Color"));
+                e.setMaterial(rs.getString("Material"));
+                e.setPriceOriginal(rs.getInt("OriginalPrice"));
+                e.setQuantitySold(rs.getInt("QuantitySold"));
+                list.add(e);
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return list;
+    }
+
+    public List<Product> getProductsLatest() {
+        String sql = "select * from Product order by CreateDate desc ";
+        List<Product> list = new ArrayList<>();
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                Product e = new Product();
+                e.setId(rs.getInt("id"));
+                e.setName(rs.getString("ProductName"));
+                e.setPrice(rs.getInt("Price"));
+                e.setImage(rs.getString("image"));
+                e.setDescription(rs.getString("Description"));
+                e.setCreateDate(rs.getString("CreateDate"));
+                e.setUpdateDate(rs.getString("UpdateDate"));
+                e.setCategory(getCategoryById(rs.getInt("cid")));
+                e.setQuantity(rs.getInt("quantity"));
+                e.setColor(rs.getString("Color"));
+                e.setMaterial(rs.getString("Material"));
+                e.setPriceOriginal(rs.getInt("OriginalPrice"));
+                e.setQuantitySold(rs.getInt("QuantitySold"));
+                list.add(e);
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return list;
+    }
+
+    public List<Product> getProductsSold() {
+        String sql = "select * from Product order by QuantitySold desc ";
+        List<Product> list = new ArrayList<>();
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                Product e = new Product();
+                e.setId(rs.getInt("id"));
+                e.setName(rs.getString("ProductName"));
+                e.setPrice(rs.getInt("Price"));
+                e.setImage(rs.getString("image"));
+                e.setDescription(rs.getString("Description"));
+                e.setCreateDate(rs.getString("CreateDate"));
+                e.setUpdateDate(rs.getString("UpdateDate"));
+                e.setCategory(getCategoryById(rs.getInt("cid")));
+                e.setQuantity(rs.getInt("quantity"));
+                e.setColor(rs.getString("Color"));
+                e.setMaterial(rs.getString("Material"));
+                e.setPriceOriginal(rs.getInt("OriginalPrice"));
+                e.setQuantitySold(rs.getInt("QuantitySold"));
+                list.add(e);
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return list;
+    }
+
+    public List<Product> getProductsPrice() {
+        String sql = "select * from Product order by Price desc ";
         List<Product> list = new ArrayList<>();
         try {
             PreparedStatement st = connection.prepareStatement(sql);
@@ -299,74 +483,6 @@ public class ProductDAO extends DBContext {
         }
     }
 
-    public List<Product> getAllProductsByCategoryID(int cid, String key, int price, String color, String material) {
-        String sql = "select * from Product";
-        List<Product> list = new ArrayList<>();
-        if (cid != 0) {
-            sql += " where cid = " + cid;
-        }
-        if (key != "") {
-            sql += " and ProductName like N'%" + key + "%'";
-        }
-        if (color != "") {
-            sql += " and Color = N'" + color + "'";
-        }
-        if (material != "") {
-            sql += " and Material = N'" + material + "'";
-        }
-
-        if (price != 0) {
-            switch (price) {
-                case 1: {
-                    sql += " and price <= 100000 ";
-                    break;
-                }
-                case 2: {
-                    sql += " and price between 100000 and 300000";
-                    break;
-                }
-                case 3: {
-                    sql += " and price between 300000 and 500000 ";
-                    break;
-                }
-                case 4: {
-                    sql += " and price between 500000 and 1000000 ";
-                    break;
-                }
-                case 5: {
-                    sql += " and price >= 1000000 ";
-                    break;
-                }
-
-            }
-        }
-        System.out.println(sql);
-        try {
-            PreparedStatement st = connection.prepareStatement(sql);
-            ResultSet rs = st.executeQuery();
-            while (rs.next()) {
-                Product e = new Product();
-                e.setId(rs.getInt("id"));
-                e.setName(rs.getString("ProductName"));
-                e.setPrice(rs.getInt("Price"));
-                e.setImage(rs.getString("image"));
-                e.setDescription(rs.getString("Description"));
-                e.setCreateDate(rs.getString("CreateDate"));
-                e.setUpdateDate(rs.getString("UpdateDate"));
-                e.setCategory(getCategoryById(rs.getInt("cid")));
-                e.setQuantity(rs.getInt("quantity"));
-                e.setColor(rs.getString("Color"));
-                e.setMaterial(rs.getString("Material"));
-                e.setPriceOriginal(rs.getInt("OriginalPrice"));
-                e.setQuantitySold(rs.getInt("QuantitySold"));
-                list.add(e);
-            }
-        } catch (Exception e) {
-            System.out.println(e);
-        }
-        return list;
-    }
-
     public List<Product> searchByKey(String key) {
         String sql = "select * from Product";
         List<Product> list = new ArrayList<>();
@@ -449,6 +565,66 @@ public class ProductDAO extends DBContext {
                     e.setQuantitySold(rs.getInt("QuantitySold"));
                     list.add(e);
                 }
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return list;
+    }
+
+    public List<Product> getProductsByColor(String color) {
+        String sql = "select * from Product where color like N'%" + color + "%'";
+        System.out.println(sql);
+        List<Product> list = new ArrayList<>();
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                Product e = new Product();
+                e.setId(rs.getInt("id"));
+                e.setName(rs.getString("ProductName"));
+                e.setPrice(rs.getInt("Price"));
+                e.setImage(rs.getString("image"));
+                e.setDescription(rs.getString("Description"));
+                e.setCreateDate(rs.getString("CreateDate"));
+                e.setUpdateDate(rs.getString("UpdateDate"));
+                e.setCategory(getCategoryById(rs.getInt("cid")));
+                e.setQuantity(rs.getInt("quantity"));
+                e.setColor(rs.getString("Color"));
+                e.setMaterial(rs.getString("Material"));
+                e.setPriceOriginal(rs.getInt("OriginalPrice"));
+                e.setQuantitySold(rs.getInt("QuantitySold"));
+                list.add(e);
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return list;
+    }
+
+    public List<Product> getProductsByMaterial(String material) {
+        String sql = "select * from Product where material like N'%" + material + "%'";
+        System.out.println(sql);
+        List<Product> list = new ArrayList<>();
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                Product e = new Product();
+                e.setId(rs.getInt("id"));
+                e.setName(rs.getString("ProductName"));
+                e.setPrice(rs.getInt("Price"));
+                e.setImage(rs.getString("image"));
+                e.setDescription(rs.getString("Description"));
+                e.setCreateDate(rs.getString("CreateDate"));
+                e.setUpdateDate(rs.getString("UpdateDate"));
+                e.setCategory(getCategoryById(rs.getInt("cid")));
+                e.setQuantity(rs.getInt("quantity"));
+                e.setColor(rs.getString("Color"));
+                e.setMaterial(rs.getString("Material"));
+                e.setPriceOriginal(rs.getInt("OriginalPrice"));
+                e.setQuantitySold(rs.getInt("QuantitySold"));
+                list.add(e);
             }
         } catch (Exception e) {
             System.out.println(e);
@@ -764,7 +940,7 @@ public class ProductDAO extends DBContext {
 
     public static void main(String[] args) {
         ProductDAO d = new ProductDAO();
-        System.out.println(d.getProductsByPrice(500000, 700000));
+        System.out.println(d.getRevenueYearMonth(2022).size());
     }
 
 }

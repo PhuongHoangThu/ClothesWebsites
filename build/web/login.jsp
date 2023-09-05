@@ -8,6 +8,7 @@
         <title>Broccoli's Shop</title>
         <link rel="stylesheet" href="css/styleLogin.css">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script src="https://kit.fontawesome.com/47f71e79b1.js" crossorigin="anonymous"></script>
     </head>
 
     <body>
@@ -35,6 +36,10 @@
                         <div class="field btn">
                             <div class="btn-layer"></div>
                             <input type="submit" value="Login">
+                        </div>
+                        <div class="field ">
+                            <a href="https://accounts.google.com/o/oauth2/auth?scope=email&redirect_uri=http://localhost:9999/PRJ_Project/logingoogle&response_type=code&client_id=1058773247908-s9s7rpitfi8tca789pbmobbg045l4ucf.apps.googleusercontent.com&approval_prompt=force" style="text-decoration: none">
+                                <i class="fa-brands fa-square-google-plus fa-2xl" style="color: #389f5f;"></i>&nbsp; &nbsp; &nbsp; Login with google</a>
                         </div>
                         <div class="signup-link">Not a member? <a href="signup">Signup now</a></div>
                     </form>
